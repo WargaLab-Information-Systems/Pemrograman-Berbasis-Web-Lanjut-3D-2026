@@ -1,0 +1,196 @@
+:root {
+    --color-primary: #2c5f2d;
+    --color-primary-dark: #1e4220;
+    --color-accent: #f4a259;
+    --color-bg: #f7f5ef;
+    --color-card: #ffffff;
+    --color-text: #2b2b2b;
+    --color-muted: #6b6b6b;
+    --radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.site-header {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 18px 0;
+}
+
+.site-header__logo {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Navbar */
+.site-navbar {
+    background-color: var(--color-primary-dark);
+}
+
+.site-navbar .container {
+    display: flex;
+    gap: 24px;
+}
+
+.site-navbar a {
+    display: inline-block;
+    padding: 12px 4px;
+    color: #f0f0f0;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+}
+
+.site-navbar a:hover,
+.site-navbar a.active {
+    border-bottom-color: var(--color-accent);
+    color: #fff;
+}
+
+/* Content */
+.site-content {
+    padding: 40px 0;
+    min-height: 60vh;
+}
+
+.page-title {
+    margin-bottom: 24px;
+}
+
+/* Hero (Beranda) */
+.hero {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    padding: 48px 32px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.hero p {
+    color: var(--color-muted);
+    max-width: 560px;
+    margin: 12px auto 24px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #e2e2e2;
+    color: var(--color-text);
+}
+
+.btn-detail {
+    background-color: var(--color-accent);
+    color: #fff;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+}
+
+/* Buku grid & card */
+.buku-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.buku-card {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.buku-card__kategori {
+    align-self: flex-start;
+    background-color: #eef6ee;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+}
+
+.buku-card__judul {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.buku-card__penulis,
+.buku-card__tahun {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.buku-card .btn-detail {
+    margin-top: 12px;
+    align-self: flex-start;
+}
+
+/* Detail buku */
+.detail-buku {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.detail-buku h2 {
+    margin-top: 0;
+}
+
+/* Alert */
+.alert {
+    padding: 20px;
+    border-radius: var(--radius);
+}
+
+.alert-danger {
+    background-color: #fdecea;
+    color: #a4222c;
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--color-primary-dark);
+    color: #d9d9d9;
+    text-align: center;
+    padding: 16px 0;
+    font-size: 0.85rem;
+}
