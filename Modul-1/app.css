@@ -1,0 +1,336 @@
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap");
+
+:root {
+    --ink: #111827;
+    --text: #374151;
+    --muted: #6b7280;
+    --page: #f5f6f8;
+    --surface: #ffffff;
+    --line: #e2e5ea;
+    --accent: #1e3a8a;
+    --accent-hover: #172b69;
+    --accent-soft: #e6ebf8;
+
+    --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-title: "Newsreader", Georgia, "Times New Roman", serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    background: var(--page);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-title);
+    color: var(--ink);
+    line-height: 1.2;
+}
+
+a:focus-visible,
+.btn:focus-visible {
+    outline: 3px solid #93a8e8;
+    outline-offset: 2px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+    background: var(--ink);
+    color: #e5e7eb;
+    padding: 40px 0 36px;
+}
+
+.header h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+}
+
+.header p {
+    color: #9ca3af;
+    max-width: 60ch;
+}
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nav-content {
+    display: flex;
+    gap: 6px;
+}
+
+.nav-content a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 16px 12px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-content a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* ---------- Content ---------- */
+
+.content {
+    min-height: 70vh;
+    padding-top: 48px;
+    padding-bottom: 64px;
+}
+
+.hero {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 64px 56px;
+    text-align: left;
+}
+
+.hero h2 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    max-width: 55ch;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 32px;
+}
+
+/* ---------- Button ---------- */
+
+.btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 11px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn:hover {
+    background: var(--accent-hover);
+}
+
+/* ---------- Page header ---------- */
+
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-header h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: var(--muted);
+}
+
+/* ---------- Book list ---------- */
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.book-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.15s;
+}
+
+.book-card:hover {
+    border-color: #b6c0d6;
+}
+
+/* Ikon/logo dihilangkan, tampilan hanya teks */
+.book-icon,
+.detail-icon {
+    display: none;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 14px 0 8px;
+}
+
+.book-info p {
+    margin: 4px 0;
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.category {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-action {
+    margin-top: 24px;
+}
+
+/* ---------- Detail ---------- */
+
+.detail-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 48px;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.detail-info {
+    max-width: 60ch;
+}
+
+.detail-info h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 14px 0 12px;
+}
+
+.detail-info p {
+    margin: 10px 0;
+}
+
+.detail-info .btn {
+    margin-top: 24px;
+}
+
+/* ---------- Not found ---------- */
+
+.not-found {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    text-align: center;
+    padding: 64px 24px;
+}
+
+.not-found h2 {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+}
+
+.not-found p {
+    color: var(--muted);
+    margin-bottom: 24px;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+    background: var(--ink);
+    color: #9ca3af;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 24px 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+
+    .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .header {
+        padding: 28px 0;
+    }
+
+    .header h1 {
+        font-size: 1.6rem;
+    }
+
+    .nav-content {
+        overflow-x: auto;
+    }
+
+    .hero {
+        padding: 40px 24px;
+    }
+
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-card {
+        flex-direction: column;
+        padding: 28px 24px;
+        gap: 24px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+        transition: none !important;
+    }
+
+}
