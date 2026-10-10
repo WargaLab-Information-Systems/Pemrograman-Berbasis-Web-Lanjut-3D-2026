@@ -1,0 +1,70 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: #f9f6f0;
+    color: #2b2b2b;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header { background: #5c3d2e; color: #fff; text-align: center; padding: 40px 20px; }
+.header h1 { font-size: 36px; }
+.header p { color: #f3dfb8; margin-top: 8px; }
+
+/* Navbar */
+.navbar { background: #3e2518; }
+.navbar .nav-inner { max-width: 1080px; margin: 0 auto; display: flex; }
+.navbar a { color: #fff; text-decoration: none; padding: 20px; display: block; }
+.navbar a.active { background: #c9973f; }
+.navbar a:hover { background: #c9973f; }
+
+/* Konten */
+main { flex: 1; }
+.container { max-width: 1080px; margin: 0 auto; padding: 36px 0; }
+
+/* Footer */
+.footer { background: #3e2518; color: #f3dfb8; text-align: center; padding: 18px; font-size: 14px; }
+
+/* Tombol */
+.btn {
+    display: inline-block; background: #c9973f; color: #fff; text-decoration: none;
+    padding: 14px 30px; border-radius: 6px; font-weight: 600;
+}
+.btn:hover { background: #b0832f; }
+.btn-sm { padding: 12px 18px; }
+
+/* Beranda */
+.hero { background: #fff; border-radius: 12px; text-align: center; padding: 60px 40px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.hero h2 { color: #5c3d2e; font-size: 32px; margin-bottom: 14px; }
+.hero p { color: #777; max-width: 600px; margin: 0 auto 24px; line-height: 1.7; }
+
+.fitur { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+.fitur .item { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.fitur h3 { color: #5c3d2e; margin-bottom: 10px; }
+.fitur p { line-height: 1.7; }
+
+/* Daftar buku */
+.judul-halaman { color: #5c3d2e; font-size: 26px; margin-bottom: 24px; }
+.grid-buku { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card {
+    background: #fff; border-top: 4px solid #c9973f; border-radius: 10px;
+    padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+.badge { display: inline-block; background: #f1e2c8; color: #5c3d2e; font-size: 12px; padding: 5px 12px; border-radius: 20px; }
+.card h3 { color: #5c3d2e; margin: 14px 0 12px; font-size: 20px; }
+.card .meta { color: #777; font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+
+/* Detail buku */
+.detail { background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.detail h2 { color: #5c3d2e; margin: 14px 0 20px; }
+.detail table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+.detail th, .detail td { text-align: left; padding: 14px 10px; border-bottom: 1px solid #eee; }
+.detail th { width: 160px; color: #5c3d2e; }
+
+@media (max-width: 800px) {
+    .grid-buku, .fitur { grid-template-columns: 1fr; }
+    .container { padding: 24px 16px; }
+}
