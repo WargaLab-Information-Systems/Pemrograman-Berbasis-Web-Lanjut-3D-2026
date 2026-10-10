@@ -1,0 +1,404 @@
+/* @import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+} */
+
+:root {
+    --ink: #34242b;
+    --muted: #765d67;
+    --rose: #a93662;
+    --rose-dark: #812448;
+    --pink: #f7e8ee;
+    --pink-pale: #fff9fb;
+    --line: #e7c5d1;
+    --paper: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--pink-pale);
+    color: var(--ink);
+}
+
+.header {
+    background-color: var(--paper);
+    border-bottom: 4px solid var(--rose);
+    color: var(--rose-dark);
+    padding: 24px max(24px, calc((100% - 1100px) / 2));
+}
+
+.header h1 {
+    font-family: inherit;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.navbar {
+    background-color: var(--pink);
+    border-bottom: 1px solid var(--line);
+    padding: 13px max(24px, calc((100% - 1100px) / 2));
+}
+
+.navbar a {
+    color: var(--rose-dark);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-right: 24px;
+}
+
+.navbar a:hover,
+.navbar a:focus-visible {
+    color: var(--rose);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.konten {
+    width: min(100% - 48px, 1100px);
+    margin: 0 auto;
+    padding: 42px 0 56px;
+    min-height: 65vh;
+}
+
+.beranda-hero {
+    position: relative;
+    height: 360px;
+    overflow: hidden;
+    background-color: var(--rose-dark);
+}
+
+.beranda-foto,
+.beranda-lapisan {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.beranda-foto {
+    object-fit: cover;
+    object-position: center 48%;
+}
+
+.beranda-lapisan {
+    background-color: rgba(52, 25, 38, 0.5);
+}
+
+.beranda-teks {
+    position: absolute;
+    left: 36px;
+    bottom: 34px;
+    color: var(--paper);
+}
+
+.beranda-teks p {
+    color: #f8dce7;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.beranda-teks h2 {
+    font-size: 38px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.beranda-teks span {
+    display: block;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.beranda-katalog {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    padding: 26px 4px;
+}
+
+.beranda-katalog h2 {
+    color: var(--rose-dark);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.beranda-katalog p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+.beranda-katalog a {
+    flex: 0 0 auto;
+    border: 1px solid var(--rose);
+    color: var(--rose-dark);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-decoration: none;
+}
+
+.beranda-katalog a:hover,
+.beranda-katalog a:focus-visible {
+    background-color: var(--pink);
+}
+
+.halaman-judul {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+    padding-bottom: 14px;
+}
+
+.halaman-judul h2 {
+    color: var(--rose-dark);
+    font-size: 27px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.halaman-judul p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.daftar-buku {
+    border-top: 1px solid var(--line);
+}
+
+.baris-buku {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(140px, 0.7fr) auto;
+    align-items: center;
+    gap: 24px;
+    min-height: 92px;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 8px;
+}
+
+.baris-judul h3 {
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.baris-judul p,
+.baris-data {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.baris-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.baris-tautan {
+    justify-self: end;
+    border: 1px solid var(--line);
+    color: var(--rose-dark);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 12px;
+    text-decoration: none;
+}
+
+.baris-tautan:hover,
+.baris-tautan:focus-visible {
+    background-color: var(--pink);
+    border-color: var(--rose);
+}
+
+.detail-buku {
+    max-width: 760px;
+    background-color: var(--paper);
+    border-top: 3px solid var(--rose);
+    border-bottom: 1px solid var(--line);
+    padding: 24px 28px 26px;
+}
+
+.detail-kepala {
+    border-bottom: 1px solid var(--line);
+    padding: 18px 0 21px;
+}
+
+.detail-kategori {
+    color: var(--rose);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.detail-kepala h2 {
+    color: var(--ink);
+    font-size: 29px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 8px;
+}
+
+.detail-penulis {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.detail-meta {
+    padding-top: 8px;
+}
+
+.detail-meta div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+}
+
+.detail-meta dt {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.detail-meta dd {
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.detail-kembali {
+    display: inline-block;
+    margin-top: 18px;
+    color: var(--rose-dark);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.detail-kembali:hover,
+.detail-kembali:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.detail-tidak-ditemukan {
+    max-width: 700px;
+    border-top: 2px solid var(--rose-dark);
+    border-bottom: 1px solid var(--line);
+    padding: 30px 0;
+}
+
+.detail-tidak-ditemukan h2 {
+    color: var(--ink);
+    font-size: 27px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.detail-tidak-ditemukan > p:not(.detail-kategori) {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.footer {
+    background-color: var(--ink);
+    color: #f8e9ef;
+    font-size: 13px;
+    padding: 18px 24px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 20px 24px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+    }
+
+    .konten {
+        width: min(100% - 32px, 1100px);
+        padding: 32px 0 42px;
+    }
+
+    .beranda-hero {
+        height: 300px;
+    }
+
+    .beranda-teks {
+        left: 20px;
+        right: 20px;
+        bottom: 22px;
+    }
+
+    .beranda-teks h2 {
+        font-size: 30px;
+    }
+
+    .beranda-katalog {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+        padding: 21px 2px;
+    }
+
+    .halaman-judul h2 {
+        font-size: 24px;
+    }
+
+    .baris-buku {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px 14px;
+    }
+
+    .baris-judul h3 {
+        font-size: 15px;
+    }
+
+    .baris-data {
+        grid-column: 1;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .baris-tautan {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        font-size: 11px;
+    }
+
+    .detail-buku {
+        padding: 19px 20px 21px;
+    }
+
+    .detail-kepala {
+        padding-top: 14px;
+    }
+
+    .detail-kepala h2 {
+        font-size: 24px;
+    }
+}
