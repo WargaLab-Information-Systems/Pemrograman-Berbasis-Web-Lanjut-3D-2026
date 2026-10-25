@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f7fa;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+/* Header */
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-content img {
+    width: 65px;
+    height: 65px;
+    border-radius: 100px;
+    
+}
+
+header {
+    background-color: #1f3c88;
+    color: white;
+    padding: 10px 8%;
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+header p {
+    color: #dbe4ff;
+    font-weight: normal;
+}
+
+/* Navbar */
+nav {
+    background-color: white;
+    padding: 10px 8%;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+nav a {
+    color: #1f3c88;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+nav a:hover {
+    color: #162d66;
+}
+
+/* Konten utama */
+main {
+    width: 84%;
+    max-width: 1200px;
+    margin: 40px auto;
+    min-height: 60vh;
+}
+
+main > h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+    color: #1f2937;
+}
+
+/* Daftar kartu */
+.buku-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.buku-card {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 640px) {
+    .buku-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.buku-card h2 {
+    color: #1f3c88;
+    margin-bottom: 12px;
+}
+
+.buku-card p {
+    margin-bottom: 8px;
+}
+
+.buku-card a,
+.detail-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 16px;
+    background-color: #1f3c88;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.buku-card a:hover,
+.detail-button:hover {
+    background-color: #162d66;
+}
+
+/* Halaman detail */
+.detail-buku {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.detail-buku h2 {
+    color: #1f3c88;
+    margin-bottom: 20px;
+}
+
+.detail-buku p {
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #1f2937;
+    color: #d1d5db;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
