@@ -1,0 +1,519 @@
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7f9;
+    color: #263238;
+    min-height: 100vh;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ===== NAVBAR ===== */
+.header {
+    background: #173b57;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.navbar {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar nav a:hover {
+    color: #9ed8e8;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    min-height: calc(100vh - 140px);
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+/* ===== HERO ===== */
+.hero {
+    background: linear-gradient(135deg, #173b57, #277c91);
+    border-radius: 20px;
+    padding: 65px;
+    color: white;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(23, 59, 87, 0.18);
+}
+
+.hero-label {
+    color: #5aaabd;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    line-height: 1.7;
+    max-width: 650px;
+}
+
+/* ===== BUTTON UMUM ===== */
+.btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 22px;
+    background: #277c91;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.hero .btn {
+    background: white;
+    color: #173b57;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* ===== WELCOME ===== */
+.welcome {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.welcome h2 {
+    margin-bottom: 10px;
+    color: #173b57;
+}
+
+.welcome p {
+    color: #607d8b;
+    line-height: 1.7;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+    margin-bottom: 35px;
+}
+
+.page-header h1 {
+    font-size: 36px;
+    color: #173b57;
+    margin-bottom: 10px;
+}
+
+.page-header p:last-child {
+    color: #607d8b;
+}
+
+/* ===== BOOK GRID ===== */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+/* ===== BOOK CARD ===== */
+.book-card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    transition: 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+}
+
+.book-icon {
+    min-width: 70px;
+    height: 90px;
+    border-radius: 12px;
+    background: #e4f3f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h2 {
+    font-size: 21px;
+    color: #173b57;
+    margin-bottom: 12px;
+}
+
+.book-info p {
+    color: #607d8b;
+    margin-bottom: 7px;
+}
+
+.book-info strong {
+    color: #37474f;
+}
+
+.book-extra {
+    margin-top: 15px;
+    color: #277c91;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ===== DETAIL BUKU ===== */
+.detail-card {
+    background: white;
+    border-radius: 20px;
+    padding: 45px;
+    display: flex;
+    gap: 40px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    max-width: 850px;
+    margin: auto;
+}
+
+.detail-icon {
+    width: 180px;
+    height: 230px;
+    border-radius: 18px;
+    background: #e4f3f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 75px;
+}
+
+.detail-info {
+    flex: 1;
+}
+
+.detail-info h1 {
+    font-size: 36px;
+    color: #173b57;
+    margin-bottom: 25px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.detail-item strong {
+    color: #607d8b;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.detail-item span {
+    font-size: 18px;
+    color: #263238;
+}
+
+/* ===== NOT FOUND ===== */
+.not-found {
+    background: white;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 50px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.not-found-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.not-found h1 {
+    color: #173b57;
+    margin-bottom: 12px;
+}
+
+.not-found p {
+    color: #607d8b;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: #173b57;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+/* ===== PANEL FORM DAN TABEL CRUD ===== */
+#formTitle,
+.content h2 {
+    color: #173b57;
+}
+
+#formTitle {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.content h2 {
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.content > div[style*="background:white"] {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== FORM TAMBAH DAN EDIT ===== */
+#formBuku {
+    margin-top: 18px;
+}
+
+#formBuku label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #263238;
+}
+
+#formBuku input {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background: white;
+    color: #263238;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#formBuku input:focus {
+    border-color: #277c91;
+    box-shadow: 0 0 0 3px rgba(39, 124, 145, 0.13);
+}
+
+#formBuku small {
+    display: block;
+    margin-top: 5px;
+    color: #607d8b;
+    font-size: 12px;
+}
+
+/* ===== TOMBOL FORM ===== */
+#formBuku button {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 18px;
+    background: #277c91;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#formBuku button:hover {
+    background: #1d6577;
+    transform: translateY(-1px);
+}
+
+#formBuku #tombolBatal {
+    margin-left: 8px;
+    background: #64748b;
+}
+
+#formBuku #tombolBatal:hover {
+    background: #475569;
+}
+
+/* ===== PESAN BERHASIL DAN ERROR ===== */
+#pesan {
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#pesan:not(:empty) {
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: #f1f5f9;
+}
+
+/* ===== TABEL DATA BUKU ===== */
+.content table {
+    width: 100%;
+    margin-top: 12px;
+    border-collapse: collapse;
+    color: #263238;
+    font-size: 14px;
+}
+
+.content table th {
+    background: #f1f5f9;
+    color: #173b57;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.content table th,
+.content table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.content table tbody tr:hover {
+    background: #f8fafc;
+}
+
+/* ===== TOMBOL UBAH DAN HAPUS ===== */
+#daftarBuku button {
+    border: none;
+    border-radius: 6px;
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#daftarBuku button:first-child {
+    background: #e0f2fe;
+    color: #075985;
+}
+
+#daftarBuku button:first-child:hover {
+    background: #bae6fd;
+}
+
+#daftarBuku button:last-child {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+#daftarBuku button:last-child:hover {
+    background: #fecaca;
+}
+
+/* ===== PAGINATION ===== */
+#infoHalaman {
+    margin: 18px 0 10px;
+    color: #607d8b;
+    font-size: 14px;
+}
+
+#tombolSebelumnya,
+#tombolBerikutnya {
+    border: none;
+    border-radius: 7px;
+    padding: 9px 15px;
+    margin-right: 5px;
+    background: #173b57;
+    color: white;
+    cursor: pointer;
+}
+
+#tombolSebelumnya:hover:not(:disabled),
+#tombolBerikutnya:hover:not(:disabled) {
+    background: #277c91;
+}
+
+#tombolSebelumnya:disabled,
+#tombolBerikutnya:disabled {
+    background: #cbd5e1;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+        padding: 18px 0;
+        gap: 15px;
+    }
+
+    .hero {
+        padding: 35px 25px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-card {
+        flex-direction: column;
+        padding: 30px;
+    }
+
+    .detail-icon {
+        width: 100%;
+        height: 180px;
+    }
+
+    .content {
+        padding-top: 28px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+    }
+
+    #formBuku button {
+        margin-top: 8px;
+    }
+
+    .content table {
+        min-width: 650px;
+    }
+}
