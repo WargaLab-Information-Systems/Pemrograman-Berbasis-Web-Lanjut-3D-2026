@@ -1,0 +1,35 @@
+/* Tombol "Batal" pada form (sembunyi di awal; JS yang menampilkannya) */
+#form-buku #btn-cancel {
+    background-color: #6c757d;
+    display: none;
+    margin-left: 10px;
+}
+
+/* Baris info di tabel (memuat / kosong / error) */
+#buku-table-body .baris-info {
+    text-align: center;
+}
+
+#buku-table-body .baris-error {
+    color: red;
+}
+
+/* Tombol aksi di tiap baris tabel */
+#buku-table-body .btn-ubah {
+    padding: 5px 10px;
+    background-color: #d4a373;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#buku-table-body .btn-hapus {
+    padding: 5px 10px;
+    background-color: #bc6c25;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+}
