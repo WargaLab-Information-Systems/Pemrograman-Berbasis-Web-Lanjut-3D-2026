@@ -1,0 +1,15 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Buku;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Database\Seeder;
+
+class BukuSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Buku::factory()->count(6) ->create();
+    }
+}

@@ -1,0 +1,12 @@
+<?php
+
+use App\Http\Controllers\BukuController;
+use Illuminate\Support\Facades\Route;
+
+Route::view('/', 'Welcome')->name('home');
+
+Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
+
+Route::get('/buku/{id}', [BukuController::class, 'show'])
+    ->whereNumber('id')
+    ->name('buku.show');
