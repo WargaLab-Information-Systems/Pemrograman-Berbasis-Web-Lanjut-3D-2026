@@ -1,0 +1,244 @@
+.halaman {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #F7F2EE;
+    color: #2F2527;
+}
+
+header {
+    background: #642C38;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+
+nav {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #E5D9D5;
+}
+
+nav a {
+    margin: 0 10px;
+    color: #8B3A4A;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #642C38;
+}
+
+main {
+    max-width: 1000px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.daftar-buku {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 25px;
+}
+
+.kartu-buku {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #E5D9D5;
+    box-shadow: 0 4px 12px rgba(100, 44, 56, 0.08);
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+}
+
+.kartu-buku h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #8B3A4A;
+    font-size: 20px;
+}
+
+.kartu-buku p {
+    margin: 7px 0;
+    color: #75686A;
+}
+
+.kartu-buku a {
+    display: inline-block;
+    width: fit-content;
+    margin-top: auto;
+    padding: 9px 16px;
+    background: #8B3A4A;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+main h2 {
+    margin-top: 0;
+    color: #8B3A4A;
+}
+
+.kartu-buku a:hover {
+    background: #642C38;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    background: #642C38;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .daftar-buku {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detail-buku {
+    max-width: 750px;
+    margin: 30px auto;
+}
+
+.detail-card {
+    background: white;
+    padding: 35px;
+    border-radius: 12px;
+    border: 1px solid #E5D9D5;
+    box-shadow: 0 4px 12px rgba(100, 44, 56, 0.08);
+}
+
+.label-detail {
+    margin: 0 0 8px;
+    color: #8B3A4A;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.detail-card h2 {
+    margin: 0 0 25px;
+    color: #8B3A4A;
+    font-size: 28px;
+}
+
+.info-buku {
+    border-top: 1px solid #E5D9D5;
+    border-bottom: 1px solid #E5D9D5;
+    margin-bottom: 25px;
+}
+
+.info-buku p {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+    margin: 0;
+    border-bottom: 1px solid #E5D9D5;
+}
+
+.info-buku p:last-child {
+    border-bottom: none;
+}
+
+.info-buku strong {
+    color: #75686A;
+}
+
+.info-buku span {
+    color: #2F2527;
+}
+
+.tombol-kembali {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #8B3A4A;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.tombol-kembali:hover {
+    background: #642C38;
+}
+
+.form-buku {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #E5D9D5;
+    margin: 20px 0;
+}
+
+.form-buku h3 { margin-top: 0; color: #8B3A4A; }
+
+.baris-form { margin-bottom: 14px; }
+
+.baris-form label { display: block; margin-bottom: 6px; font-weight: bold; color: #75686A; }
+
+.baris-form input,
+.baris-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E5D9D5;
+    border-radius: 6px;
+}
+
+.error-field { color: #B3261E; display: block; margin-top: 4px; }
+
+.tombol {
+    padding: 9px 16px;
+    background: #8B3A4A;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.tombol:hover { background: #642C38; }
+.tombol:disabled { opacity: 0.5; cursor: not-allowed; }
+.tombol-abu { background: #75686A; }
+.tombol-merah { background: #B3261E; }
+.tombol-kecil { padding: 6px 12px; font-size: 14px; }
+
+.tabel-buku {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #E5D9D5;
+}
+
+.tabel-buku th,
+.tabel-buku td { padding: 12px; border-bottom: 1px solid #E5D9D5; text-align: left; }
+
+.tabel-buku th { background: #8B3A4A; color: white; }
+
+.paginasi { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+
+.pesan { padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; }
+.pesan-sukses { background: #E3F4E5; color: #1E5E2A; }
+.pesan-gagal { background: #FCE4E2; color: #8C1D18; }
+
+a.tombol { display: inline-block; text-decoration: none; }
+.tombol-biru { background: #2F6F8F; }
+.tombol-biru:hover { background: #1F4F68; }
