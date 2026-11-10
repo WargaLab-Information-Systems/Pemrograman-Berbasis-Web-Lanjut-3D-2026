@@ -80,7 +80,7 @@
                                     <tr>
 <!-- A1 -->
                                         <td class="py-3.5 px-4 font-semibold text-slate-400">{{ $index + 1 }}</td>
-                                        <td class="py-3.5 px-4 font-medium text-slate-900">{{!! $buku->judul !!}}</td>
+                                        <td class="py-3.5 px-4 font-medium text-slate-900">{{$buku->judul}}</td>
                                         <td class="py-3.5 px-4">
                                             <span class="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700">
                                                 {{ $buku->kategori->nama ?? (is_array($buku->kategori) ? ($buku->kategori['nama'] ?? '-') : $buku->kategori) }}
@@ -92,6 +92,7 @@
                                             <a href="{{ route('buku.show', $buku->id) }}" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded transition">Detail</a>
                                             <a href="{{ route('buku.edit', $buku->id) }}" class="px-2 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-xs font-semibold rounded transition">Edit</a>
                                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus buku ini?')">
+                                                <!-- Penambalan -->
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded transition">Hapus</button>

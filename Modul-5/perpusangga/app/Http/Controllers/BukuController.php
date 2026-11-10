@@ -82,8 +82,9 @@ class BukuController extends Controller
     public function cari(Request $request)
     {
         $judul = $request->query('judul');
+        $bukus = Buku::where('judul', $judul)->get();
 
-        $bukus = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        // $bukus = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
         // $bukus = DB::select('SELECT * FROM bukus WHERE judul = ?', [$judul]);
         return response()->json($bukus);
     }
