@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // A2
 
 class BukuController extends Controller
 {
@@ -75,5 +76,15 @@ class BukuController extends Controller
         $buku->delete();
 
         return redirect()->route('buku.index')->with('success', 'Data buku berhasil dihapus.');
+    }
+
+    // A2
+    public function cari(Request $request)
+    {
+        $judul = $request->query('judul');
+
+        $bukus = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        // $bukus = DB::select('SELECT * FROM bukus WHERE judul = ?', [$judul]);
+        return response()->json($bukus);
     }
 }

@@ -7,6 +7,8 @@ use App\Models\Buku;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Gate; // A4
+
 class PeminjamanController extends Controller
 {
     // Tampilkan Halaman Kelola Peminjaman
@@ -88,5 +90,12 @@ class PeminjamanController extends Controller
             ->get();
 
         return view('peminjaman.riwayat', compact('peminjamans'));
+    }
+
+    //A4
+    public function show($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        return view('peminjaman.show', compact('peminjaman'));
     }
 }

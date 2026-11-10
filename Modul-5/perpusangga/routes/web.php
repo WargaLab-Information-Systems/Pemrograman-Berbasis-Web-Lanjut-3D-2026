@@ -11,6 +11,13 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+    // A2
+    Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
+    // A3
+    Route::get('/buku/{buku}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus.get');
+    // A4
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
     
     // Redirect
     Route::get('/dashboard', function () {

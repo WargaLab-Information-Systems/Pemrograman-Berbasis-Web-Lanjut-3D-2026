@@ -78,8 +78,9 @@
                             <tbody class="divide-y divide-slate-100 text-sm text-slate-700">
                                 @forelse($bukus as $index => $buku)
                                     <tr>
+<!-- A1 -->
                                         <td class="py-3.5 px-4 font-semibold text-slate-400">{{ $index + 1 }}</td>
-                                        <td class="py-3.5 px-4 font-medium text-slate-900">{{ $buku->judul }}</td>
+                                        <td class="py-3.5 px-4 font-medium text-slate-900">{{!! $buku->judul !!}}</td>
                                         <td class="py-3.5 px-4">
                                             <span class="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-700">
                                                 {{ $buku->kategori->nama ?? (is_array($buku->kategori) ? ($buku->kategori['nama'] ?? '-') : $buku->kategori) }}
