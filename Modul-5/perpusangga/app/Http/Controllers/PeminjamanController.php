@@ -7,7 +7,7 @@ use App\Models\Buku;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Gate; // A4
+// use Illuminate\Support\Facades\Gate; // A4
 
 class PeminjamanController extends Controller
 {

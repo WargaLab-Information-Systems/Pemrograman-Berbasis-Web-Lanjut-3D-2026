@@ -12,14 +12,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // A2
     Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
-    // A3
-    // Route::get('/buku/{buku}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus.get'); 
-    // A4
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
-    
-    // Redirect
+
     Route::get('/dashboard', function () {
         $user = auth()->user();
 
@@ -34,19 +29,16 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Profil 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Katalog
     Route::middleware(['can:Lihat daftar buku'])->group(function () {
         Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
         Route::get('/buku/{id}', [BukuController::class, 'show'])->name('buku.show');
     });
 
-    // Data AP
-    Route::middleware(['can:Kelola data buku'])->group(function () {
+    Route::middleware(['can:kelola-buku'])->group(function () {
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
         Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
@@ -61,30 +53,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/riwayat-peminjaman', [PeminjamanController::class, 'riwayat'])->name('peminjaman.riwayat');
     });
 
-    // Peminjaman AP
     Route::middleware(['can:Kelola peminjaman'])->group(function () {
         Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
         Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
         Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])->name('peminjaman.update');
     });
 
-    // Laporan AP
     Route::middleware(['can:Lihat laporan'])->group(function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
 
-    // Dashboard A
     Route::middleware(['can:Akses dashboard admin'])->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
-        // Role
         Route::get('/users', [ProfileController::class, 'indexUsers'])->name('users.index');
         Route::put('/users/{id}/role', [ProfileController::class, 'updateRole'])->name('users.updateRole');
     });
 
-    // Dashboard P
     Route::middleware(['can:Akses dashboard petugas'])->group(function () {
         Route::get('/petugas/dashboard', function () {
             return view('petugas.dashboard');
