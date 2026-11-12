@@ -105,17 +105,29 @@ class RolePermissionSeeder extends Seeder
         );
         $petugas->assignRole($rolePetugas);
 
-        // Akun Siswa
+        // Akun Siswa 1
         $siswa = User::firstOrCreate(
             ['email' => 'siswa@perpustakaan.com'],
             ['name' => 'Siswa Teladan', 'password' => Hash::make('password')]
         );
         $siswa->assignRole($roleSiswa);
 
+        // Akun Siswa 2 (Untuk pengujian IDOR Soal 4: Siswa Lain)
+        $siswa2 = User::firstOrCreate(
+            ['email' => 'siswa2@perpustakaan.com'],
+            ['name' => 'Siswa Kedua', 'password' => Hash::make('password')]
+        );
+        $siswa2->assignRole($roleSiswa);
+
         // Anggota & Contoh Riwayat Peminjaman Siswa
         $anggotaSiswa = \App\Models\Anggota::firstOrCreate(
             ['email' => 'siswa@perpustakaan.com'],
             ['nama' => 'Siswa Teladan', 'no_telepon' => '08123456789']
+        );
+
+        $anggotaSiswa2 = \App\Models\Anggota::firstOrCreate(
+            ['email' => 'siswa2@perpustakaan.com'],
+            ['nama' => 'Siswa Kedua', 'no_telepon' => '08987654321']
         );
 
         $bukuContoh = \App\Models\Buku::first();

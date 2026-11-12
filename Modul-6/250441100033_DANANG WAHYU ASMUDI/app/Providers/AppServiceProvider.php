@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Peminjaman;
+use App\Policies\PeminjamanPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('kelola-buku', function (?User $user) {
             return $user ? $user->hasRole(['admin', 'petugas']) : false;
         });
+
+        // SOAL 4: Registrasi Policy untuk Model Peminjaman
+        Gate::policy(Peminjaman::class, PeminjamanPolicy::class);
 
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('peminjamans') && !\Illuminate\Support\Facades\Schema::hasColumn('peminjamans', 'status')) {

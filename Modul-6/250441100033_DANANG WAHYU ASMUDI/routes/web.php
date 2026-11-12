@@ -3,6 +3,7 @@
 use App\Models\Kategori;
 use App\Models\Buku;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -54,13 +55,14 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
     });
 
-    // SOAL 1 (A4) [RENTAN IDOR]: Rute GET /peminjaman/{id} di balik auth
-    // Menampilkan detail peminjaman tanpa pemeriksaan kepemilikan
-    Route::get('/peminjaman/{id}', function ($id) {
-        $peminjaman = \App\Models\Peminjaman::with(['anggota', 'buku'])->findOrFail($id);
-        // Langsung tampilkan view tanpa cek pemilik (Rentan IDOR)
-        return view('peminjaman.show', compact('peminjaman'));
-    })->name('peminjaman.detail')->where('id', '[0-9]+');
+    // =========================================================================
+    // SOAL 4: Rute GET /peminjaman/{id} memanggil method show pada PeminjamanController
+    // Celah A4 (IDOR) ditutup dengan otorisasi Policy (PeminjamanPolicy@view)
+    // Siswa pemilik -> 200, Siswa lain -> 403 Forbidden, Petugas/Admin -> 200
+    // =========================================================================
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])
+        ->name('peminjaman.detail')
+        ->where('id', '[0-9]+');
 
     // Mengajukan Peminjaman Buku
     Route::post('/buku/{id}/pinjam', function ($id) {

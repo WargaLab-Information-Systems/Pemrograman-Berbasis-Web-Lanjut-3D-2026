@@ -22,7 +22,8 @@ class PeminjamanPolicy
         }
 
         // 2. Siswa hanya diizinkan melihat peminjaman miliknya sendiri (mencegah celah IDOR)
-        if ($peminjaman->anggota && $peminjaman->anggota->email === $user->email) {
+        $anggota = $peminjaman->anggota ?? \App\Models\Anggota::find($peminjaman->anggota_id);
+        if ($anggota && strtolower($anggota->email) === strtolower($user->email)) {
             return true;
         }
 
