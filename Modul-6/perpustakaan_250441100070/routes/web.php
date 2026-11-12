@@ -37,6 +37,24 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:akses dashboard petugas')
         ->name('petugas.dashboard');
 
+    /**
+     * Soal 3: /buku/create dijaga Gate "kelola-buku", BUKAN middleware
+     * permission seperti route lain. Form tambah buku yang sesungguhnya
+     * ada inline di halaman /buku (lihat @can('kelola-buku') di
+     * index.blade.php); route ini membuat URL /buku/create ikut diperiksa
+     * Gate yang sama ketika diketik langsung oleh siswa (403 Forbidden),
+     * lalu mengarahkan admin/petugas kembali ke /buku.
+     *
+     * PENTING: route ini HARUS didaftarkan SEBELUM /buku/{id} -- Laravel
+     * mencocokkan route sesuai URUTAN DIDAFTARKAN (bukan urutan group),
+     * dan /buku/{id} akan menganggap "create" sebagai nilai {id} kalau
+     * didaftarkan lebih dulu, sehingga /buku/create tidak akan pernah
+     * tercapai.
+     */
+    Route::get('/buku/create', fn () => redirect()->route('buku.index'))
+        ->middleware('can:kelola-buku')
+        ->name('buku.create');
+
     // Buku (Modul 1-4)
     Route::middleware('permission:lihat daftar buku')->group(function () {
         Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');

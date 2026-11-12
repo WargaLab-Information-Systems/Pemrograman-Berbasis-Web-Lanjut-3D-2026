@@ -9,6 +9,12 @@
     <div id="pesan" class="alert" role="alert" hidden></div>
 
     {{--
+        SOAL 3: form tambah/ubah/hapus buku sekarang dijaga Gate
+        "kelola-buku" (bukan permission "kelola data buku" seperti di
+        Modul 5), didefinisikan sekali di AppServiceProvider.
+    --}}
+
+    {{--
         SOAL 2 (a): {{ }} MELAKUKAN escaping HTML secara otomatis. Tag
         <script> pada judul akan tampil sebagai TEKS biasa di layar,
         bukan dijalankan oleh browser.
@@ -25,7 +31,7 @@
     </section>
 
     {{-- Formulir tambah / ubah hanya untuk yang berhak mengelola buku (admin & petugas) --}}
-    @can('kelola data buku')
+    @can('kelola-buku')
         <section class="panel">
             <h3 id="judul-form">Tambah Buku</h3>
 
@@ -76,7 +82,7 @@
         <table id="tabel-buku" class="tabel-buku"
                data-api-url="{{ url('/api/buku') }}"
                data-detail-url="{{ route('buku.show', ':id') }}"
-               data-kelola="{{ auth()->user()->can('kelola data buku') ? '1' : '0' }}"
+               data-kelola="{{ auth()->user()->can('kelola-buku') ? '1' : '0' }}"
                data-ajukan="{{ auth()->user()->can('mengajukan peminjaman buku') ? '1' : '0' }}"
                data-ajukan-url="{{ route('peminjaman.ajukan', ':id') }}">
             <thead>
@@ -86,7 +92,7 @@
                     <th>Judul</th>
                     <th>Penulis</th>
                     <th>Tahun Terbit</th>
-                    @canany(['kelola data buku', 'mengajukan peminjaman buku'])
+                    @canany(['kelola-buku', 'mengajukan peminjaman buku'])
                         <th>Aksi</th>
                     @endcanany
                 </tr>
