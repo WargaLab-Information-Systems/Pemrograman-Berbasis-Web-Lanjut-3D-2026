@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaim Hadiah Spesial Perpustakaan!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #e8eaf6);
+            margin: 0;
+            padding: 50px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            padding: 30px;
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 {
+            color: #d81b60;
+            margin-top: 0;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .btn-jebakan {
+            display: inline-block;
+            margin-top: 20px;
+            background: #e91e63;
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.4);
+            transition: 0.3s;
+        }
+        .btn-jebakan:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+        .note {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🎉 Selamat! Anda Terpilih Menerima Saldo E-Wallet Rp 100.000</h2>
+        <p>
+            Akun perpustakaan Anda aktif dan terpilih dalam undian pengunjung setia minggu ini.
+            Silakan klik tombol di bawah untuk klaim hadiah sekarang sebelum hangus!
+        </p>
+
+        <!-- 
+            SERANGAN CSRF (Cross-Site Request Forgery):
+            Tautan jebakan ini mengarahkan ke URL penghapusan buku di aplikasi perpustakaan.
+            Jika pengguna yang sedang login adalah Admin/Petugas, mengklik tautan ini akan memicu 
+            penghapusan buku tanpa disadari oleh korban!
+        -->
+        <a href="http://127.0.0.1:8000/buku/1/hapus" class="btn-jebakan">
+            🎁 KLAIM REWARD SEKARANG
+        </a>
+
+        <div class="note">
+            <strong>Penjelasan Simulasi Soal 1 (A3) & Soal 2 (c):</strong><br>
+            - Pada <strong>Soal 1 (A3)</strong> (Rentan): Jika route GET <code>/buku/{id}/hapus</code> aktif, buku ID 1 langsung terhapus saat link diklik.<br>
+            - Pada <strong>Soal 2 (c)</strong> (Aman): Route GET telah dihapus dan diganti method DELETE dengan token CSRF. Mengklik tautan ini akan menghasilkan <strong>404 Not Found</strong> atau <strong>405 Method Not Allowed</strong> sehingga serangan gagal!
+        </div>
+    </div>
+</body>
+</html>
