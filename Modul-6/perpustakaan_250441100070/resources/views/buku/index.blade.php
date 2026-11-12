@@ -7,7 +7,23 @@
 
     {{-- Pesan sukses / gagal (diisi oleh resources/js/buku.js) --}}
     <div id="pesan" class="alert" role="alert" hidden></div>
-    
+
+    {{--
+        SOAL 1 (A1) -- SENGAJA RENTAN.
+        {!! !!} TIDAK melakukan escaping HTML. Jika $b->judul berisi tag
+        <script>, browser akan MENJALANKANNYA (Stored XSS), bukan
+        menampilkannya sebagai teks.
+    --}}
+    <section class="panel">
+        <h3>5 Buku Terbaru</h3>
+        <ul class="daftar-polos">
+            @forelse ($bukuTerbaru as $b)
+                <li>{!! $b->judul !!} &mdash; {{ $b->penulis }}</li>
+            @empty
+                <li>Belum ada data buku.</li>
+            @endforelse
+        </ul>
+    </section>
 
     {{-- Formulir tambah / ubah hanya untuk yang berhak mengelola buku (admin & petugas) --}}
     @can('kelola data buku')

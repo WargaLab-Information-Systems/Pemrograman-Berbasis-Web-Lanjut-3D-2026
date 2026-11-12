@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\BukuController as ApiBukuController;
+use App\Http\Controllers\BukuCariController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaporanController;
@@ -42,6 +44,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/buku/{id}', [BukuController::class, 'show'])->name('buku.show');
     });
 
+    /**
+     * SOAL 1 (A2) -- SENGAJA RENTAN: SQL Injection lewat ?judul=...
+     * Hanya middleware auth, sesuai spesifikasi A2.
+     */
+    Route::get('/buku-cari', [BukuCariController::class, 'cari'])->name('buku.cari');
+
+    /**
+     * SOAL 1 (A3) -- SENGAJA RENTAN: CSRF lewat link GET biasa.
+     * Route ini memanggil ULANG method destroy() yang sudah ada di
+     * Api\BukuController (bukan menulis ulang logika hapus), persis
+     * seperti yang diminta spesifikasi A3. Karena memakai GET dan tidak
+     * ada pemeriksaan CSRF (GET memang dikecualikan VerifyCsrfToken),
+     * cukup dengan tautan biasa di jebakan.html buku bisa terhapus.
+     */
+    Route::get('/buku/{id}/hapus', [ApiBukuController::class, 'destroy'])->name('buku.hapus.rentan');
+
     // Kelola pengguna dan role (khusus admin)
     Route::middleware('permission:kelola data pengguna')
         ->prefix('admin/users')
@@ -62,6 +80,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])
         ->middleware('permission:kelola peminjaman')
         ->name('peminjaman.index');
+
+    /**
+     * SOAL 1 (A4) -- SENGAJA RENTAN: IDOR. Tidak ada pemeriksaan pemilik,
+     * siapa pun yang login bisa membuka peminjaman siapa pun.
+     */
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
 
     Route::post('/peminjaman/{peminjaman}/setujui', [PeminjamanController::class, 'setujui'])
         ->middleware('permission:memproses persetujuan peminjaman')

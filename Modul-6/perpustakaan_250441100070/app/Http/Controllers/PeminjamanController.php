@@ -10,7 +10,7 @@ use Illuminate\View\View;
 
 class PeminjamanController extends Controller
 {
-    /** Pengguna mengajukan peminjaman sebuah buku. */
+    /** Pengguna mengajukan peminjaman sebuah buku. (Tidak berubah dari Modul 5) */
     public function ajukan(Request $request, string $id): RedirectResponse
     {
         $buku = Buku::findOrFail($id);
@@ -36,7 +36,20 @@ class PeminjamanController extends Controller
             ->with('sukses', 'Pengajuan peminjaman berhasil dikirim. Menunggu persetujuan petugas.');
     }
 
-    /** Daftar pengajuan dan peminjaman berjalan (admin/petugas). */
+    /**
+     * SOAL 1 (A4) -- SENGAJA RENTAN (IDOR).
+     * Mengambil data lewat findOrFail TANPA memeriksa siapa pemiliknya.
+     * Siapa pun yang login bisa membaca peminjaman siswa lain hanya dengan
+     * mengganti angka {id} di URL.
+     */
+    public function show(string $id): View
+    {
+        $peminjaman = Peminjaman::with(['anggota', 'buku.kategori'])->findOrFail($id);
+
+        return view('peminjaman.show', compact('peminjaman'));
+    }
+
+    /** Daftar pengajuan dan peminjaman berjalan (admin/petugas). (Tidak berubah) */
     public function index(): View
     {
         $peminjamans = Peminjaman::with(['anggota', 'buku', 'pemroses'])
@@ -76,7 +89,7 @@ class PeminjamanController extends Controller
         return back()->with('sukses', 'Pengajuan ditolak.');
     }
 
-    /** Daftar buku yang sedang dipinjam dan yang sudah dikembalikan. */
+    /** Daftar buku yang sedang dipinjam dan yang sudah dikembalikan. (Tidak berubah) */
     public function pengembalian(): View
     {
         $dipinjam = Peminjaman::with(['anggota', 'buku'])
