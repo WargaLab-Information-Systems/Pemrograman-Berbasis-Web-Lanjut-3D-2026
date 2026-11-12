@@ -68,12 +68,12 @@
                     <p class="text-gray-600 text-sm mt-1">Daftar buku perpustakaan yang tersedia untuk dipinjam atau dikelola.</p>
                 </div>
 
-                <!-- Tombol Tambah Buku (Kondisi Awal Modul 5: Berdasarkan Role) -->
-                @role('admin|petugas')
+                {{-- SOAL 3: Tombol Tambah Buku dibungkus Gate @can('kelola-buku') --}}
+                @can('kelola-buku')
                     <a href="{{ route('buku.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition shadow flex items-center gap-1">
                         + Tambah Buku Baru
                     </a>
-                @endrole
+                @endcan
             </div>
 
             <!-- Pesan Flash -->
@@ -113,10 +113,10 @@
                             <th class="px-4 py-3 text-left font-medium text-gray-600">Penulis</th>
                             <th class="px-4 py-3 text-left font-medium text-gray-600">Tahun</th>
                             
-                            <!-- Kolom Aksi (Kondisi Awal Modul 5: Berdasarkan Role) -->
-                            @role('admin|petugas')
+                            <!-- SOAL 3: Kolom Aksi hanya tampil jika memiliki Gate 'kelola-buku' -->
+                            @can('kelola-buku')
                                 <th class="px-4 py-3 text-center font-medium text-gray-600">Aksi</th>
-                            @endrole
+                            @endcan
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -132,29 +132,31 @@
                                 </td>
                                 <td class="px-4 py-3 font-medium">
                                     <a href="{{ route('buku.show', $buku->id) }}" class="text-blue-600 hover:underline">
-                                        {{-- SOAL 2 (a) --}}
+                                        {{-- SOAL 2 (a): Escaping Blade aman dari XSS --}}
                                         {{ $buku->judul }}
                                     </a>
                                 </td>
                                 <td class="px-4 py-3 text-gray-700">{{ $buku->penulis }}</td>
                                 <td class="px-4 py-3 text-gray-600">{{ $buku->tahun_terbit }}</td>
 
-                                <!-- SOAL 1 (A3): Penghapusan menggunakan method GET (Rentan CSRF) -->
-                                @role('admin|petugas')
+                                <!-- SOAL 3 & SOAL 2 (c): Aksi Ubah dan Form Hapus DELETE ber-CSRF -->
+                                @can('kelola-buku')
                                     <td class="px-4 py-3 text-center whitespace-nowrap">
                                         <div class="flex items-center justify-center gap-2">
                                             <a href="{{ route('buku.edit', $buku->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white text-xs px-2.5 py-1.5 rounded transition">
                                                 Ubah
+                                            </a>
+                                            {{-- Form Hapus menggunakan method DELETE dan @csrf --}}
                                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Hapus buku ini?')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2.5 py-1.5 rounded transition">
+                                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus buku \'{{ addslashes($buku->judul) }}\'?')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2.5 py-1.5 rounded transition">
                                                     Hapus
                                                 </button>
                                             </form>
                                         </div>
                                     </td>
-                                @endrole
+                                @endcan
                             </tr>
                         @empty
                             <tr>

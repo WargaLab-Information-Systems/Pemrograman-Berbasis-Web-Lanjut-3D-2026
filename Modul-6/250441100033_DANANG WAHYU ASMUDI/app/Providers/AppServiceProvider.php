@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // SOAL 3: Gate 'kelola-buku' (Hanya role admin dan petugas)
+        Gate::define('kelola-buku', function (?User $user) {
+            return $user ? $user->hasRole(['admin', 'petugas']) : false;
+        });
+
         try {
             if (\Illuminate\Support\Facades\Schema::hasTable('peminjamans') && !\Illuminate\Support\Facades\Schema::hasColumn('peminjamans', 'status')) {
                 \Illuminate\Support\Facades\Schema::table('peminjamans', function (\Illuminate\Database\Schema\Blueprint $table) {

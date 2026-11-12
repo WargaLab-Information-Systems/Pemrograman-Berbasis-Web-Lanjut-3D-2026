@@ -34,22 +34,25 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     
-    // SOAL 1 (A2) [RENTAN SQL INJECTION]: Rute /buku-cari di balik auth
-    // Method controller membaca query string judul dan menjalankan DB::select() tanpa binding
-
+    // =========================================================================
+    // SOAL 1 (A2) & SOAL 2 (b): Rute /buku-cari di balik auth
+    // =========================================================================
     Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
 
-    // SOAL 1 (A3) [RENTAN CSRF]: Rute GET /buku/{buku}/hapus di balik auth
-    // Memanggil method destroy via GET tanpa proteksi CSRF
-    
-    // Route::get('/buku/{id}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus');
+    // =========================================================================
+    // SOAL 3: Rute Pengelolaan Buku dengan Gate 'can:kelola-buku'
+    // Menggantikan pemeriksaan role sebelumnya, hanya Admin & Petugas yang diizinkan.
+    // Jika Siswa mengetik URL /buku/create langsung -> Respons 403 Forbidden!
+    // =========================================================================
+    Route::middleware(['can:kelola-buku'])->group(function () {
+        Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
+        Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+        Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
+        Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
 
-    // Rute pengelolaan buku (Form tambah, simpan, ubah)
-    Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
-    Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
-    Route::get('/buku/{id}/edit', [BukuController::class, 'edit'])->name('buku.edit');
-    Route::put('/buku/{id}', [BukuController::class, 'update'])->name('buku.update');
-    Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+        // SOAL 2 (c): Penghapusan buku wajib lewat method DELETE (CSRF protected)
+        Route::delete('/buku/{id}', [BukuController::class, 'destroy'])->name('buku.destroy');
+    });
 
     // SOAL 1 (A4) [RENTAN IDOR]: Rute GET /peminjaman/{id} di balik auth
     // Menampilkan detail peminjaman tanpa pemeriksaan kepemilikan
