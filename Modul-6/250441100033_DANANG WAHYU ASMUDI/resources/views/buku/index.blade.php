@@ -132,8 +132,8 @@
                                 </td>
                                 <td class="px-4 py-3 font-medium">
                                     <a href="{{ route('buku.show', $buku->id) }}" class="text-blue-600 hover:underline">
-                                        {{-- SOAL 1 (A1): Sintaks Blade tanpa escaping {!! !!} (Rentan XSS) --}}
-                                        {!! $buku->judul !!}
+                                        {{-- SOAL 2 (a) --}}
+                                        {{ $buku->judul }}
                                     </a>
                                 </td>
                                 <td class="px-4 py-3 text-gray-700">{{ $buku->penulis }}</td>
@@ -145,11 +145,13 @@
                                         <div class="flex items-center justify-center gap-2">
                                             <a href="{{ route('buku.edit', $buku->id) }}" class="bg-yellow-600 hover:bg-yellow-700 text-white text-xs px-2.5 py-1.5 rounded transition">
                                                 Ubah
-                                            </a>
-                                            <!-- Tautan GET penghapusan buku yang rentan CSRF -->
-                                            <a href="{{ route('buku.hapus', $buku->id) }}" onclick="return confirm('Hapus buku ini?')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2.5 py-1.5 rounded transition">
-                                                Hapus
-                                            </a>
+                                            <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Hapus buku ini?')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-2.5 py-1.5 rounded transition">
+                                                    Hapus
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 @endrole

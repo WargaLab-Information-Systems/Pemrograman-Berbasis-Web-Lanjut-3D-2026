@@ -117,7 +117,7 @@ class BukuController extends Controller
         $judul = $request->query('judul', '');
 
         // Query rentan SQL Injection sesuai spesifikasi Soal 1 (A2)
-        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        $hasil = DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);
         return response()->json($hasil);
     }
 }

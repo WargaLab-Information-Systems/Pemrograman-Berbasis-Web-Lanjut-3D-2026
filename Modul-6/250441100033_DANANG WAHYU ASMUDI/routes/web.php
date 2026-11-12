@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     // SOAL 1 (A3) [RENTAN CSRF]: Rute GET /buku/{buku}/hapus di balik auth
     // Memanggil method destroy via GET tanpa proteksi CSRF
     
-    Route::get('/buku/{id}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus');
+    // Route::get('/buku/{id}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus');
 
     // Rute pengelolaan buku (Form tambah, simpan, ubah)
     Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
