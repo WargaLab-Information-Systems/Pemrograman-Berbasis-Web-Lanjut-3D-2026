@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Api\BukuController as ApiBukuController;
 use App\Http\Controllers\BukuCariController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
@@ -45,20 +44,22 @@ Route::middleware('auth')->group(function () {
     });
 
     /**
-     * SOAL 1 (A2) -- SENGAJA RENTAN: SQL Injection lewat ?judul=...
-     * Hanya middleware auth, sesuai spesifikasi A2.
+     * SOAL 2 (b): route TIDAK berubah -- perbaikannya ada di
+     * BukuCariController (parameter binding), bukan di sini.
      */
     Route::get('/buku-cari', [BukuCariController::class, 'cari'])->name('buku.cari');
 
     /**
-     * SOAL 1 (A3) -- SENGAJA RENTAN: CSRF lewat link GET biasa.
-     * Route ini memanggil ULANG method destroy() yang sudah ada di
-     * Api\BukuController (bukan menulis ulang logika hapus), persis
-     * seperti yang diminta spesifikasi A3. Karena memakai GET dan tidak
-     * ada pemeriksaan CSRF (GET memang dikecualikan VerifyCsrfToken),
-     * cukup dengan tautan biasa di jebakan.html buku bisa terhapus.
+     * SOAL 2 (c): route GET /buku/{id}/hapus milik Soal 1 (A3) DIHAPUS dari
+     * sini. Penghapusan buku satu-satunya sekarang lewat tombol Hapus yang
+     * sudah ada sejak Modul 4/5 (DELETE /api/buku/{id} via Fetch, dengan
+     * header X-CSRF-TOKEN yang divalidasi middleware VerifyCsrfToken) --
+     * setara dengan <form> ber-@csrf dan @method('DELETE'): sama-sama
+     * memakai verb DELETE dan sama-sama membawa token CSRF yang diperiksa.
+     * Tautan di jebakan.html yang masih menunjuk ke /buku/{id}/hapus kini
+     * menghasilkan 404 (route tidak ada), dan Postman yang mengirim DELETE
+     * ke /api/buku/{id} tanpa token menghasilkan 419.
      */
-    Route::get('/buku/{id}/hapus', [ApiBukuController::class, 'destroy'])->name('buku.hapus.rentan');
 
     // Kelola pengguna dan role (khusus admin)
     Route::middleware('permission:kelola data pengguna')
@@ -82,8 +83,9 @@ Route::middleware('auth')->group(function () {
         ->name('peminjaman.index');
 
     /**
-     * SOAL 1 (A4) -- SENGAJA RENTAN: IDOR. Tidak ada pemeriksaan pemilik,
-     * siapa pun yang login bisa membuka peminjaman siapa pun.
+     * A4 belum diperbaiki di tahap Soal 2 ini -- masih memakai {id} dan
+     * controller PeminjamanController@show milik Soal 1 (belum ada Gate
+     * atau Policy). Perbaikannya baru datang di Soal 4.
      */
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
 

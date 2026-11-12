@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * SOAL 1 (A2) -- SENGAJA RENTAN. Nilai $judul dari query string digabungkan
- * langsung ke dalam string SQL, sehingga pengguna bisa menyisipkan potongan
- * SQL miliknya sendiri (SQL Injection). Jangan dipakai di luar latihan ini.
+ * SOAL 2 (b): diperbaiki dengan parameter binding ("?"). Nilai $judul
+ * dikirim terpisah dari teks query, sehingga driver database menatanya
+ * sebagai DATA, bukan sebagai bagian dari perintah SQL. Payload seperti
+ * ' OR '1'='1 tidak lagi berpengaruh -- hanya dicocokkan sebagai teks biasa.
  */
 class BukuCariController extends Controller
 {
@@ -17,8 +18,7 @@ class BukuCariController extends Controller
     {
         $judul = $request->query('judul', '');
 
-        // RENTAN: $judul ditempel langsung ke query, tanpa disaring.
-        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        $hasil = DB::select('SELECT * FROM bukus WHERE judul = ?', [$judul]);
 
         return response()->json($hasil);
     }

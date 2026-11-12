@@ -9,16 +9,15 @@
     <div id="pesan" class="alert" role="alert" hidden></div>
 
     {{--
-        SOAL 1 (A1) -- SENGAJA RENTAN.
-        {!! !!} TIDAK melakukan escaping HTML. Jika $b->judul berisi tag
-        <script>, browser akan MENJALANKANNYA (Stored XSS), bukan
-        menampilkannya sebagai teks.
+        SOAL 2 (a): {{ }} MELAKUKAN escaping HTML secara otomatis. Tag
+        <script> pada judul akan tampil sebagai TEKS biasa di layar,
+        bukan dijalankan oleh browser.
     --}}
     <section class="panel">
         <h3>5 Buku Terbaru</h3>
         <ul class="daftar-polos">
             @forelse ($bukuTerbaru as $b)
-                <li>{!! $b->judul !!} &mdash; {{ $b->penulis }}</li>
+                <li>{{ $b->judul }} &mdash; {{ $b->penulis }}</li>
             @empty
                 <li>Belum ada data buku.</li>
             @endforelse
