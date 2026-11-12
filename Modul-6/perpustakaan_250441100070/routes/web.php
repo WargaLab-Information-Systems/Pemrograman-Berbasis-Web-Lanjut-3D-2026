@@ -150,3 +150,5 @@ Route::middleware('auth')->group(function () {
 
 // Route login, registrasi, logout, dan reset password dari Laravel Breeze
 require __DIR__.'/auth.php';
+
+
