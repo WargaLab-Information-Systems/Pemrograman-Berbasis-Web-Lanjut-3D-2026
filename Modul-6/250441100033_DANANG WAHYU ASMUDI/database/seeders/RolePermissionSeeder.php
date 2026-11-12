@@ -91,10 +91,10 @@ class RolePermissionSeeder extends Seeder
             'ubah profil sendiri',
         ]);
 
-        // Akun Admin (Default Seeder)
-        $admin = User::firstOrCreate(
+        // Akun Admin (SOAL 5 (c): Ganti password admin bawaan, password tidak lagi 'password')
+        $admin = User::updateOrCreate(
             ['email' => 'admin@perpustakaan.com'],
-            ['name' => 'Admin Perpustakaan', 'password' => Hash::make('password')]
+            ['name' => 'Admin Perpustakaan', 'password' => Hash::make('AdminPerpus_250441100033!')]
         );
         $admin->assignRole($roleAdmin);
 

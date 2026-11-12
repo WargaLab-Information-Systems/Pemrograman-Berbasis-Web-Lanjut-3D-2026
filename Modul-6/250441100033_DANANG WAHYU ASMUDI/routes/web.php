@@ -209,4 +209,12 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+// =========================================================================
+// SOAL 5 (a): Rute sementara pengujian APP_DEBUG=false
+// Melempar RuntimeException untuk membuktikan tidak ada jejak kode / stack trace
+// =========================================================================
+Route::get('/test-error', function () {
+    throw new \RuntimeException('Uji coba RuntimeException pada APP_DEBUG=false');
+});
+
 require __DIR__ . '/auth.php';
