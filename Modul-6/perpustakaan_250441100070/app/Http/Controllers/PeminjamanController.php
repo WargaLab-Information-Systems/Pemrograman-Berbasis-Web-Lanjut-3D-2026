@@ -6,11 +6,12 @@ use App\Models\Buku;
 use App\Models\Peminjaman;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class PeminjamanController extends Controller
 {
-    /** Pengguna mengajukan peminjaman sebuah buku. (Tidak berubah dari Modul 5) */
+    /** Pengguna mengajukan peminjaman sebuah buku. (Tidak berubah) */
     public function ajukan(Request $request, string $id): RedirectResponse
     {
         $buku = Buku::findOrFail($id);
@@ -37,14 +38,22 @@ class PeminjamanController extends Controller
     }
 
     /**
-     * SOAL 1 (A4) -- SENGAJA RENTAN (IDOR).
-     * Mengambil data lewat findOrFail TANPA memeriksa siapa pemiliknya.
-     * Siapa pun yang login bisa membaca peminjaman siswa lain hanya dengan
-     * mengganti angka {id} di URL.
+     * SOAL 4: ditutup dengan Policy.
+     *
+     * Dua perubahan dari versi Soal 1/2 (lihat diff-nya):
+     * 1. Parameter diketik `Peminjaman $peminjaman` (implicit route model
+     *    binding) menggantikan `string $id` + `Peminjaman::findOrFail($id)`
+     *    manual -- route juga diubah memakai {peminjaman}, bukan {id}.
+     * 2. Baris Gate::authorize ditambahkan SEBELUM data ditampilkan. Baris
+     *    ini memanggil PeminjamanPolicy@view: kalau mengembalikan false,
+     *    Laravel otomatis menghentikan request dengan 403 Forbidden --
+     *    tidak perlu if/else manual.
      */
-    public function show(string $id): View
+    public function show(Peminjaman $peminjaman): View
     {
-        $peminjaman = Peminjaman::with(['anggota', 'buku.kategori'])->findOrFail($id);
+        Gate::authorize('view', $peminjaman);
+
+        $peminjaman->load(['anggota', 'buku.kategori']);
 
         return view('peminjaman.show', compact('peminjaman'));
     }

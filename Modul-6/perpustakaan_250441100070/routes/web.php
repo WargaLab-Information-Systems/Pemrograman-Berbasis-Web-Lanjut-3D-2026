@@ -101,11 +101,14 @@ Route::middleware('auth')->group(function () {
         ->name('peminjaman.index');
 
     /**
-     * A4 belum diperbaiki di tahap Soal 2 ini -- masih memakai {id} dan
-     * controller PeminjamanController@show milik Soal 1 (belum ada Gate
-     * atau Policy). Perbaikannya baru datang di Soal 4.
+     * SOAL 4: parameter route diubah dari {id} menjadi {peminjaman} supaya
+     * cocok dengan implicit model binding di PeminjamanController@show.
+     * Pemeriksaan kepemilikan dilakukan DI DALAM controller lewat
+     * Gate::authorize + PeminjamanPolicy, bukan di sini, karena otorisasi
+     * ini butuh membandingkan data pemilik peminjaman (bukan sekadar
+     * role/permission).
      */
-    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
+    Route::get('/peminjaman/{peminjaman}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
 
     Route::post('/peminjaman/{peminjaman}/setujui', [PeminjamanController::class, 'setujui'])
         ->middleware('permission:memproses persetujuan peminjaman')
