@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   PERPUSTAKAAN — Custom CSS
+   Color Scheme: Indigo (#4F46E5), Blue (#3B82F6), Emerald (#10B981)
+   ============================================================ */
+
+@layer base {
+    html {
+        font-family: 'Inter', 'Figtree', sans-serif;
+    }
+    body {
+        background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 50%, #f0f9ff 100%);
+        min-height: 100vh;
+    }
+}
+
+@layer components {
+
+    /* ── Page wrapper ─────────────────────────────────────── */
+    .book-page {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+    }
+
+    /* ── Page header ──────────────────────────────────────── */
+    .page-header {
+        background: linear-gradient(135deg, #4F46E5 0%, #3B82F6 60%, #06B6D4 100%);
+        @apply rounded-2xl p-8 mb-8 text-white shadow-xl;
+        position: relative;
+        overflow: hidden;
+    }
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: -40px; right: -40px;
+        width: 200px; height: 200px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 50%;
+    }
+    .page-header::after {
+        content: '';
+        position: absolute;
+        bottom: -60px; left: -30px;
+        width: 250px; height: 250px;
+        background: rgba(255,255,255,0.06);
+        border-radius: 50%;
+    }
+    .page-header h1 {
+        @apply text-3xl sm:text-4xl font-bold mb-2;
+        position: relative; z-index: 1;
+    }
+    .page-header p {
+        @apply text-blue-100 text-base;
+        position: relative; z-index: 1;
+    }
+
+    .page-label {
+        @apply inline-block text-xs font-bold uppercase tracking-widest
+               bg-white/20 text-white px-3 py-1 rounded-full mb-3;
+        position: relative; z-index: 1;
+    }
+
+    /* ── Book grid ────────────────────────────────────────── */
+    .book-grid {
+        @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6;
+    }
+
+    /* ── Book card ────────────────────────────────────────── */
+    .book-card {
+        @apply bg-white rounded-2xl shadow-md border border-indigo-50
+               flex flex-col transition-all duration-300;
+    }
+    .book-card:hover {
+        @apply shadow-xl -translate-y-1 border-indigo-200;
+    }
+
+    .book-card-content {
+        @apply p-5 flex-1;
+    }
+    .book-card-content h2 {
+        @apply text-lg font-bold text-gray-800 mt-2 mb-1 leading-snug;
+    }
+
+    .book-card-footer {
+        @apply px-5 py-3 border-t border-gray-100 flex flex-wrap items-center gap-2;
+    }
+    .book-card-footer small {
+        @apply text-xs text-gray-400 mr-auto;
+    }
+
+    .book-category {
+        @apply inline-block text-xs font-semibold text-indigo-600
+               bg-indigo-50 px-2 py-0.5 rounded-full;
+    }
+    .book-author {
+        @apply text-sm text-gray-600 font-medium;
+    }
+    .book-year {
+        @apply text-xs text-gray-400 mt-1;
+    }
+
+    /* ── Form wrapper ─────────────────────────────────────── */
+    .book-form-wrapper {
+        @apply bg-white rounded-2xl shadow-md border border-indigo-50 p-6 mb-8;
+    }
+    .book-form-wrapper h2 {
+        @apply text-xl font-bold text-indigo-700 mb-5 pb-3 border-b border-indigo-100;
+    }
+    .book-form-wrapper label {
+        @apply block text-sm font-semibold text-gray-700 mb-1;
+    }
+    .book-form-wrapper input[type="text"],
+    .book-form-wrapper input[type="number"],
+    .book-form-wrapper select,
+    .book-form-wrapper textarea {
+        @apply w-full border border-gray-300 rounded-lg px-4 py-2.5
+               text-sm text-gray-800 focus:outline-none focus:ring-2
+               focus:ring-indigo-500 focus:border-transparent
+               transition mb-4;
+    }
+    .book-form-wrapper > div {
+        @apply mb-4;
+    }
+
+    /* ── Buttons ──────────────────────────────────────────── */
+    .btn-pinjam {
+        @apply inline-flex items-center gap-1 px-4 py-2 text-sm font-semibold
+               text-white rounded-lg transition-all duration-200 cursor-pointer;
+        background: linear-gradient(135deg, #4F46E5, #6366F1);
+    }
+    .btn-pinjam:hover {
+        background: linear-gradient(135deg, #3730a3, #4F46E5);
+        @apply shadow-md -translate-y-0.5;
+    }
+
+    .btn-edit {
+        @apply inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold
+               text-indigo-700 bg-indigo-50 border border-indigo-200
+               rounded-lg transition-all duration-200 cursor-pointer;
+    }
+    .btn-edit:hover {
+        @apply bg-indigo-100 shadow-sm;
+    }
+
+    .btn-hapus {
+        @apply inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold
+               text-red-600 bg-red-50 border border-red-200
+               rounded-lg transition-all duration-200 cursor-pointer;
+    }
+    .btn-hapus:hover {
+        @apply bg-red-100 shadow-sm;
+    }
+
+    #btn-simpan {
+        @apply inline-flex items-center gap-1 px-5 py-2.5 text-sm font-semibold
+               text-white rounded-lg transition-all duration-200 cursor-pointer mr-2;
+        background: linear-gradient(135deg, #4F46E5, #3B82F6);
+    }
+    #btn-simpan:hover {
+        background: linear-gradient(135deg, #3730a3, #2563EB);
+        @apply shadow-md;
+    }
+    #btn-batal {
+        @apply inline-flex items-center gap-1 px-5 py-2.5 text-sm font-semibold
+               text-gray-600 bg-gray-100 border border-gray-200
+               rounded-lg transition-all duration-200 cursor-pointer;
+    }
+    #btn-batal:hover {
+        @apply bg-gray-200;
+    }
+
+    /* ── Alerts ───────────────────────────────────────────── */
+    .alert-success {
+        @apply flex items-center gap-2 bg-emerald-50 border border-emerald-200
+               text-emerald-800 px-4 py-3 rounded-xl mb-4 text-sm font-medium;
+    }
+    .alert-success::before { content: '✅ '; }
+
+    .alert-error {
+        @apply flex items-center gap-2 bg-red-50 border border-red-200
+               text-red-800 px-4 py-3 rounded-xl mb-4 text-sm font-medium;
+    }
+    .alert-error::before { content: '❌ '; }
+
+    /* ── Table ────────────────────────────────────────────── */
+    .table-responsive {
+        @apply overflow-x-auto rounded-xl border border-gray-200 shadow-sm;
+    }
+
+    .table-responsive table,
+    .book-form-wrapper table {
+        @apply w-full text-sm text-left;
+        border-collapse: collapse;
+    }
+
+    .table-responsive thead th,
+    .book-form-wrapper thead th {
+        @apply px-5 py-3.5 text-xs font-bold uppercase tracking-wider
+               text-indigo-700 bg-indigo-50 border-b border-indigo-100;
+    }
+
+    .table-responsive tbody td,
+    .book-form-wrapper tbody td {
+        @apply px-5 py-3.5 text-gray-700 border-b border-gray-50;
+        vertical-align: middle;
+    }
+
+    .table-responsive tbody tr:last-child td,
+    .book-form-wrapper tbody tr:last-child td {
+        @apply border-b-0;
+    }
+
+    .table-responsive tbody tr:hover td,
+    .book-form-wrapper tbody tr:hover td {
+        @apply bg-indigo-50/40;
+    }
+
+    /* ── Action buttons row ───────────────────────────────── */
+    .action-buttons {
+        @apply flex flex-wrap gap-2;
+    }
+
+    .action-buttons button,
+    .action-buttons a {
+        @apply px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer;
+    }
+
+    /* ── Status badges ────────────────────────────────────── */
+    .badge-menunggu {
+        @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+               bg-yellow-100 text-yellow-800 border border-yellow-200;
+    }
+    .badge-disetujui {
+        @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+               bg-emerald-100 text-emerald-800 border border-emerald-200;
+    }
+    .badge-ditolak {
+        @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+               bg-red-100 text-red-800 border border-red-200;
+    }
+    .badge-dikembalikan {
+        @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
+               bg-blue-100 text-blue-800 border border-blue-200;
+    }
+
+    /* ── Pesan form ───────────────────────────────────────── */
+    #pesan-form {
+        @apply text-sm font-medium text-indigo-600 mt-2 min-h-[1.25rem];
+    }
+    #status-buku {
+        @apply text-sm text-gray-400 italic mb-2;
+    }
+}
