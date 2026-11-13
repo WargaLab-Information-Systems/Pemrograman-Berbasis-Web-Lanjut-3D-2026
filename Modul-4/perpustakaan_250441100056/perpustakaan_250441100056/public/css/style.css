@@ -1,0 +1,23 @@
+    .bk-card { background: #edd3bf; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem; color: #3b2a1a; }
+    .bk-card h3 { margin: 0 0 1rem; }
+    .bk-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.9rem; }
+    .bk-field label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    .bk-input { width: 100%; padding: 0.5rem 0.6rem; border: 1px solid #b89a7e; border-radius: 8px; background: #fff; box-sizing: border-box; }
+    .bk-error { color: #b42318; font-size: 0.85rem; display: block; min-height: 1.1rem; }
+    .bk-actions { grid-column: 1 / -1; display: flex; gap: 0.5rem; }
+    .bk-btn { display: inline-block; padding: 0.45rem 0.9rem; border: 0; border-radius: 8px; cursor: pointer; font-size: 0.9rem; text-decoration: none; color: #fff; background: #6b4a2f; }
+    .bk-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .bk-btn-batal { background: #8a7a6a; }
+    .bk-btn-detail { background: #5b7a8c; }
+    .bk-btn-ubah { background: #c98a1b; }
+    .bk-btn-hapus { background: #b42318; }
+    .bk-table { width: 100%; border-collapse: collapse; background: #fff; }
+    .bk-table th, .bk-table td { border: 1px solid #d3b9a1; padding: 0.55rem 0.7rem; text-align: left; }
+    .bk-table thead th { background: #d9b99e; }
+    .bk-center { text-align: center !important; }
+    .bk-nav { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .bk-alert { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-weight: 500; }
+    
+    .bk-success { background: #d1f0d8; color: #0f5132; }
+    .bk-warning { background: #fff0c2; color: #664d03; }
+    .bk-danger { background: #f8d7da; color: #842029; }
