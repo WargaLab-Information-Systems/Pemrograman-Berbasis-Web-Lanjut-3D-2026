@@ -1,0 +1,244 @@
+/* ========================================================
+   CSS Kustom Buku - Sesuai Tampilan Tabel Modul PBWL
+   ======================================================== */
+
+body {
+    background-color: #f7f5f2;
+}
+
+.buku-container {
+    max-w: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    font-family: 'Figtree', system-ui, -apple-system, sans-serif;
+}
+
+/* Styling untuk Kartu Form Tambah/Ubah Buku */
+.form-card {
+    background: #ffffff;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ebe5df;
+}
+
+.form-card h3 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #342a26;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #4a3e3d;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #dcd5ce;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #faf9f7;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #bc6c25;
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(188, 108, 37, 0.15);
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#btn-submit, .btn-primary-custom {
+    background-color: #342a26;
+    color: #ffffff;
+    padding: 9px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+#btn-submit:hover, .btn-primary-custom:hover {
+    background-color: #4a3e3d;
+}
+
+#btn-cancel {
+    background-color: #e5dfd8;
+    color: #5a4e4d;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: none;
+    transition: background-color 0.2s;
+}
+
+#btn-cancel:hover {
+    background-color: #d8d0c7;
+}
+
+/* ========================================================
+   STYLING TABEL PERSIS SEPERTI GAMBAR
+   ======================================================== */
+.table-wrapper {
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #ebe5df;
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    text-align: left;
+}
+
+table th {
+    background-color: #342a26; /* Header cokelat gelap persis seperti foto */
+    color: #ffffff;
+    padding: 14px 20px;
+    font-size: 0.925rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+table th:last-child {
+    text-align: left;
+}
+
+table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0ebe4;
+    font-size: 0.9rem;
+    color: #2b2b2b;
+    vertical-align: middle;
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background-color: #faf8f5;
+}
+
+/* Tombol Aksi Persis Sesuai Gambar */
+.btn-ubah {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #d4a373; /* Warna cokelat muda / tan */
+    color: #ffffff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-ubah:hover {
+    background-color: #c59363;
+}
+
+.btn-hapus {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #bc6c25; /* Warna cokelat oranye gelap */
+    color: #ffffff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 6px;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-hapus:hover {
+    background-color: #a85f1e;
+}
+
+.btn-pinjam {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #bc6c25;
+    color: #ffffff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btn-pinjam:hover {
+    background-color: #a85f1e;
+}
+
+.btn-detail {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #d4a373;
+    color: #ffffff !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-right: 6px;
+    transition: background-color 0.2s;
+}
+
+.btn-detail:hover {
+    background-color: #c59363;
+}
+
+.baris-info {
+    text-align: center;
+    color: #888;
+    padding: 24px;
+}
+
+.baris-error {
+    color: #dc2626;
+}
