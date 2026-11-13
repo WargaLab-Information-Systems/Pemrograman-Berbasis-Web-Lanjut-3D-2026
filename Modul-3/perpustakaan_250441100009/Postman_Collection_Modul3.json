@@ -1,0 +1,280 @@
+{
+  "info": {
+    "name": "Praktikum Modul 3 - API Perpustakaan",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Soal 3a & 4 - GET Daftar Buku (Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 4a - Cari Buku (?cari=laskar)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku?cari=laskar",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"],
+          "query": [{ "key": "cari", "value": "laskar" }]
+        }
+      }
+    },
+    {
+      "name": "Soal 4b & 4c & 4d - Filter Kategori, Tahun & Page",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku?kategori=1&page=1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"],
+          "query": [
+            { "key": "kategori", "value": "1" },
+            { "key": "page", "value": "1" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (1) - Semua Field Kosong (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (2) - Judul Terlalu Pendek (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kategori_id\": 1,\n    \"judul\": \"AB\",\n    \"penulis\": \"Andrea Hirata\",\n    \"tahun_terbit\": 2020\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (3) - Tahun di Luar Batas (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kategori_id\": 1,\n    \"judul\": \"Laskar Pelangi\",\n    \"penulis\": \"Andrea Hirata\",\n    \"tahun_terbit\": 1800\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (4) - Kategori Tidak Valid (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kategori_id\": 9999,\n    \"judul\": \"Laskar Pelangi\",\n    \"penulis\": \"Andrea Hirata\",\n    \"tahun_terbit\": 2020\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (5) - Judul Bukan Teks (422)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kategori_id\": 1,\n    \"judul\": 12345,\n    \"penulis\": \"Andrea Hirata\",\n    \"tahun_terbit\": 2020\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (6) - Data Valid / Create Buku Baru (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"kategori_id\": 1,\n    \"judul\": \"Belajar Laravel API\",\n    \"penulis\": \"Mahasiswa Praktikum\",\n    \"tahun_terbit\": 2025\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (7) - Update Sebagian (200)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"judul\": \"Belajar Laravel API Edisi Revisi\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku/1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku", "1"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (8) - Hapus Data (200) - Ganti angka di ujung URL dengan ID buku baru!",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku/21",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku", "21"]
+        }
+      }
+    },
+    {
+      "name": "Soal 6 (9) - Akses Data Tidak Ada (404)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/buku/9999",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "buku", "9999"]
+        }
+      }
+    },
+    {
+      "name": "Soal 7a - Rekap Buku per Kategori (200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/rekap/buku-per-kategori",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "rekap", "buku-per-kategori"]
+        }
+      }
+    },
+    {
+      "name": "Soal 7b - Rekap Peminjaman per Buku (200)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json", "type": "text" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/rekap/peminjaman-per-buku",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["api", "rekap", "peminjaman-per-buku"]
+        }
+      }
+    }
+  ]
+}
+
