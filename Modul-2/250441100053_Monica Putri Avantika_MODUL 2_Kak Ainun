@@ -1,0 +1,365 @@
+Migration
+Kategori
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('kategoris', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('kategoris');
+    }
+};
+Anggota
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('anggotas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('email');
+            $table->string('no_telepon');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('anggotas');
+    }
+};
+Bukus
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('bukus', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('kategori_id')
+                ->constrained('kategoris')
+                ->cascadeOnDelete();
+
+            $table->string('judul');
+            $table->string('penulis');
+            $table->year('tahun_terbit');
+
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('bukus');
+    }
+};
+Peminjaman
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('peminjamans', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('anggota_id')
+                ->constrained('anggotas')
+                ->cascadeOnDelete();
+
+            $table->foreignId('buku_id')
+                ->constrained('bukus')
+                ->cascadeOnDelete();
+
+            $table->date('tanggal_pinjam');
+            $table->date('tanggal_kembali')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('peminjamans');
+    }
+};
+Model
+Anggota
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Anggota extends Model
+{
+    use HasFactory;
+
+    protected $table = 'anggotas';
+
+    protected $fillable = [
+        'nama',
+        'email',
+        'no_telepon'
+    ];
+}
+Buku
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Buku extends Model
+{
+    use HasFactory;
+
+    protected $table = 'bukus';
+
+    protected $fillable = [
+        'kategori_id',
+        'judul',
+        'penulis',
+        'tahun_terbit'
+    ];
+}
+Kategori
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Kategori extends Model
+{
+    use HasFactory;
+
+    protected $table = 'kategoris';
+
+    protected $fillable = [
+        'nama'
+    ];
+}
+Peminjaman
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Peminjaman extends Model
+{
+    use HasFactory;
+
+    protected $table = 'peminjamans';
+
+    protected $fillable = [
+        'anggota_id',
+        'buku_id',
+        'tanggal_pinjam',
+        'tanggal_kembali'
+    ];
+}
+Factories
+Anggota
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class AnggotaFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'nama' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'no_telepon' => fake()->phoneNumber(),
+        ];
+    }
+}
+Buku
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Kategori;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class BukuFactory extends Factory
+{
+    public function definition(): array
+    {
+        $buku = fake()->randomElement([
+            [
+                'judul' => 'The Little Prince',
+                'penulis' => 'Antoine de Saint-Exupéry',
+                'tahun_terbit' => 1943,
+            ],
+            [
+                'judul' => 'Atomic Habits',
+                'penulis' => 'James Clear',
+                'tahun_terbit' => 2018,
+            ],
+            [
+                'judul' => 'Bumi',
+                'penulis' => 'Tere Liye',
+                'tahun_terbit' => 2014,
+            ],
+            [
+                'judul' => 'The Psychology of Money',
+                'penulis' => 'Morgan Housel',
+                'tahun_terbit' => 2020,
+            ],
+            [
+                'judul' => 'Laskar Pelangi',
+                'penulis' => 'Andrea Hirata',
+                'tahun_terbit' => 2005,
+            ],
+        ]);
+
+        return [
+            'kategori_id' => Kategori::inRandomOrder()->first()->id,
+            'judul' => $buku['judul'],
+            'penulis' => $buku['penulis'],
+            'tahun_terbit' => $buku['tahun_terbit'],
+        ];
+    }
+}
+Kategori
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class KategoriFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'nama' => fake()->randomElement([
+                'Fiction',
+                'Education',
+                'Technology',
+                'Self Development'
+            ]),
+        ];
+    }
+}
+Peminjaman
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Anggota;
+use App\Models\Buku;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PeminjamanFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'anggota_id' => Anggota::inRandomOrder()->first()->id,
+            'buku_id' => Buku::inRandomOrder()->first()->id,
+            'tanggal_pinjam' => fake()->date(),
+            'tanggal_kembali' => fake()->optional()->date(),
+        ];
+    }
+}
+Seeader
+Anggota
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Anggota;
+use Illuminate\Database\Seeder;
+
+class AnggotaSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Anggota::factory()->count(3)->create();
+    }
+}
+Buku
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Buku;
+use Illuminate\Database\Seeder;
+
+class BukuSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Buku::factory()->count(5)->create();
+    }
+}
+Kategori
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Kategori;
+use Illuminate\Database\Seeder;
+
+class KategoriSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Kategori::factory()->count(3)->create();
+    }
+}
+Peminjaman
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Peminjaman;
+use Illuminate\Database\Seeder;
+
+class PeminjamanSeeder extends Seeder
+{
+    public function run(): void
+    {
+        Peminjaman::factory()->count(3)->create();
+    }
+}

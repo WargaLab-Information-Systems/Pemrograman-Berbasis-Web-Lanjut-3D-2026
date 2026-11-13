@@ -1,0 +1,345 @@
+Routes/web.php
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BukuController;
+
+Route::get('/', [BukuController::class, 'home'])
+    ->name('home');
+
+Route::get('/buku', [BukuController::class, 'index'])
+    ->name('buku.index');
+
+Route::get('/buku/{id}', [BukuController::class, 'show'])
+    ->name('buku.show');
+
+Http/Controllers/BukuController.php
+<?php
+
+namespace App\Http\Controllers;
+
+class BukuController extends Controller
+{
+    private function dataBuku()
+    {
+        return [
+            [
+                'id' => 1,
+                'judul' => 'The Little Prince',
+                'penulis' => 'Antoine de Saint-Exupéry',
+                'tahun' => 1943,
+                'kategori' => 'Fiction',
+                'harga' => 165000,
+                'gambar' => 'https://covers.openlibrary.org/b/isbn/9780156012195-L.jpg'
+            ],
+            [
+                'id' => 2,
+                'judul' => 'Atomic Habits',
+                'penulis' => 'James Clear',
+                'tahun' => 2018,
+                'kategori' => 'Self Development',
+                'harga' => 185000,
+                'gambar' => 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg'
+            ],
+            [
+                'id' => 3,
+                'judul' => 'Bumi',
+                'penulis' => 'Tere Liye',
+                'tahun' => 2014,
+                'kategori' => 'Fantasy',
+                'harga' => 110000,
+                'gambar' => 'https://books.google.com/books/content?id=BsU8DwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'
+            ],
+            [
+                'id' => 4,
+                'judul' => 'The Psychology of Money',
+                'penulis' => 'Morgan Housel',
+                'tahun' => 2020,
+                'kategori' => 'Finance',
+                'harga' => 145000,
+                'gambar' => 'https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg'
+            ],
+            [
+                'id' => 5,
+                'judul' => 'Laut Bercerita',
+                'penulis' => 'Leila S. Chudori',
+                'tahun' => 2017,
+                'kategori' => 'Fiction',
+                'harga' => 125000,
+                'gambar' => 'https://books.google.com/books/content?id=e-ZDDwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'
+            ],
+            [
+                'id' => 6,
+                'judul' => 'Ikigai',
+                'penulis' => 'Héctor García',
+                'tahun' => 2016,
+                'kategori' => 'Lifestyle',
+                'harga' => 120000,
+                'gambar' => 'https://covers.openlibrary.org/b/isbn/9780143130727-L.jpg'
+            ],
+        ];
+    }
+
+    public function home()
+    {
+        $buku = $this->dataBuku();
+
+        return view('home', compact('buku'));
+    }
+
+    public function index()
+    {
+        $buku = $this->dataBuku();
+
+        return view('buku.index', compact('buku'));
+    }
+
+    public function show($id)
+    {
+        $buku = collect($this->dataBuku())
+            ->firstWhere('id', (int) $id);
+
+        return view('buku.show', compact('buku'));
+    }
+}
+Views/buku/index.blade.php
+@extends('layouts.app')
+
+@section('title', 'Bookavy - Daftar Buku')
+
+@section('content')
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <div>
+
+                <div class="hero-label">
+                    BOOKAVY COLLECTION
+                </div>
+
+                <h2>
+                    Daftar Buku
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="book-grid">
+
+            @foreach($buku as $item)
+
+                <x-book-card :buku="$item">
+
+                    <a
+                        href="{{ route('buku.show', $item['id']) }}"
+                        class="btn-detail"
+                    >
+                        Lihat Detail
+                    </a>
+
+                </x-book-card>
+
+            @endforeach
+
+        </div>
+
+    </div>
+
+</section>
+
+@endsection
+Views/buku/Show.blade.php
+@extends('layouts.app')
+
+@section('title', 'Bookavy - Detail Buku')
+
+@section('content')
+
+<section class="detail-section">
+
+    <div class="container">
+
+        @if($buku)
+
+            <div class="detail-card">
+
+                <img
+                    src="{{ $buku['gambar'] }}"
+                    alt="{{ $buku['judul'] }}"
+                >
+
+                <div class="detail-info">
+
+                    <div class="hero-label">
+                        DETAIL BUKU
+                    </div>
+
+                    <h1>
+                        {{ $buku['judul'] }}
+                    </h1>
+
+                    <p>
+                        <strong>Penulis:</strong>
+                        {{ $buku['penulis'] }}
+                    </p>
+
+                    <p>
+                        <strong>Tahun Terbit:</strong>
+                        {{ $buku['tahun'] }}
+                    </p>
+
+                    <p>
+                        <strong>Kategori:</strong>
+                        {{ $buku['kategori'] }}
+                    </p>
+
+                    <p class="detail-price">
+                        Rp {{ number_format($buku['harga'], 0, ',', '.') }}
+                    </p>
+
+                    <a
+                        href="{{ route('buku.index') }}"
+                        class="btn-primary"
+                    >
+                        Kembali ke Daftar Buku
+                    </a>
+
+                </div>
+
+            </div>
+
+        @else
+
+            <div class="not-found">
+
+                <h1>
+                    Buku Tidak Ditemukan
+                </h1>
+
+                <p>
+                    Data buku yang kamu cari tidak tersedia.
+                </p>
+
+                <a
+                    href="{{ route('buku.index') }}"
+                    class="btn-primary"
+                >
+                    Kembali ke Daftar Buku
+                </a>
+
+            </div>
+
+        @endif
+
+    </div>
+
+</section>
+
+@endsection
+Views/Components/book-card.blade.php
+<div class="book-card">
+
+    <img
+        src="{{ $buku['gambar'] }}"
+        alt="{{ $buku['judul'] }}"
+        class="book-cover"
+    >
+
+    <div class="book-info">
+
+        <h3>
+            {{ $buku['judul'] }}
+        </h3>
+
+        <p class="book-author">
+            {{ $buku['penulis'] }}
+        </p>
+
+        <p class="book-year">
+            Tahun Terbit: {{ $buku['tahun'] }}
+        </p>
+
+        <p class="book-category">
+            Kategori: {{ $buku['kategori'] }}
+        </p>
+
+        <p class="book-price">
+            Rp {{ number_format($buku['harga'], 0, ',', '.') }}
+        </p>
+
+        {{-- SLOT --}}
+        {{ $slot }}
+
+    </div>
+
+</div>
+Views/layouts/app.blade.php
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        @yield('title', 'Bookavy')
+    </title>
+
+    @vite('resources/css/app.css')
+
+</head>
+
+<body>
+
+    {{-- HEADER --}}
+    <header class="navbar">
+
+        <div class="container navbar-content">
+
+            <a href="{{ route('home') }}" class="logo">
+                Bookavy
+            </a>
+
+            {{-- NAVBAR --}}
+            <nav class="nav-menu">
+
+                <a href="{{ route('home') }}">
+                    Home
+                </a>
+
+                <a href="{{ route('buku.index') }}">
+                    Daftar Buku
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    {{-- CONTENT --}}
+    <main>
+
+        @yield('content')
+
+    </main>
+
+    {{-- FOOTER --}}
+    <footer class="footer">
+
+        <p>
+            © {{ date('Y') }} Bookavy
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
