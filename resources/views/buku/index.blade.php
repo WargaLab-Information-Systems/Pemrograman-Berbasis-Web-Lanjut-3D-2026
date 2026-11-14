@@ -1,12 +1,24 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="container" id="buku-app" data-can-manage="{{ auth()->user()->can('kelola data buku') ? 'true' : 'false' }}">
-    
-    <!-- Notifikasi Dinamis Asinkron -->
-    <div id="alert-box" style="display: none; padding: 10px 14px; margin-bottom: 1.25rem; border-radius: 6px; font-size: 0.875rem;"></div>
+<div class="container">
+    @if(session('success'))
+        <div class="alert border-0 rounded-2 py-2 px-3 mb-3 d-flex justify-content-between align-items-center" style="background:#f0fdf4; border:1px solid #bbf7d0 !important; color:#166534; font-size:0.8125rem;">
+            <div>{{ session('success') }}</div>
+            <button type="button" class="btn-close shadow-none" style="font-size:0.65rem;" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
 
-    <!-- Header Halaman -->
+    @if ($errors->any())
+        <div class="alert border-0 rounded-2 py-2 px-3 mb-3" style="background:#fef2f2; border:1px solid #fecaca !important; color:#991b1b; font-size:0.8125rem;">
+            <ul class="mb-0 ps-3">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div>
             <h4 class="fw-bold mb-1" style="letter-spacing: -0.02em;">Katalog Koleksi Buku</h4>
@@ -19,56 +31,46 @@
         @endcan
     </div>
 
-    <!-- Form Kelola Buku (Hanya Admin & Petugas) -->
     @can('kelola data buku')
     <div class="panel mb-4">
         <div class="panel-header d-flex justify-content-between align-items-center">
-            <h6 id="form-title" class="mb-0 fw-semibold fs-6">Tambah Koleksi Baru</h6>
-            <span class="text-muted" style="font-size: 0.75rem;">Operasi CRUD RESTful</span>
+            <h6 class="mb-0 fw-semibold fs-6">Tambah Koleksi Baru</h6>
+            <span class="text-muted" style="font-size: 0.75rem;">Input Form Blade</span>
         </div>
         <div class="panel-body">
-            <form id="form-tambah-buku" novalidate>
-                <input type="hidden" id="buku_id" value="">
-
+            <form action="{{ route('buku.store') }}" method="POST">
+                @csrf
                 <div class="row g-3">
                     <div class="col-md-3">
                         <label for="kategori_id" class="form-label">Kategori</label>
-                        <select id="kategori_id" class="form-select" required>
+                        <select id="kategori_id" name="kategori_id" class="form-select" required>
                             <option value="">Pilih Kategori</option>
-                            @if(isset($kategoris))
-                                @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                                @endforeach
-                            @endif
+                            @foreach ($kategoris as $kategori)
+                                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
-
                     <div class="col-md-4">
                         <label for="judul" class="form-label">Judul Buku</label>
-                        <input type="text" id="judul" class="form-control" placeholder="Contoh: Pemrograman Web Lanjut" required>
+                        <input type="text" id="judul" name="judul" class="form-control" required>
                     </div>
-
                     <div class="col-md-3">
                         <label for="penulis" class="form-label">Penulis</label>
-                        <input type="text" id="penulis" class="form-control" placeholder="Nama penulis" required>
+                        <input type="text" id="penulis" name="penulis" class="form-control" required>
                     </div>
-
                     <div class="col-md-2">
                         <label for="tahun_terbit" class="form-label">Tahun</label>
-                        <input type="number" id="tahun_terbit" class="form-control" placeholder="YYYY" required>
+                        <input type="number" id="tahun_terbit" name="tahun_terbit" class="form-control" required>
                     </div>
                 </div>
-
                 <div class="d-flex gap-2 mt-3 pt-3 border-top">
-                    <button type="submit" id="btn-submit" class="btn-brand">Simpan Koleksi</button>
-                    <button type="button" id="btn-cancel" class="btn-subtle" style="display: none;" onclick="resetForm()">Batal</button>
+                    <button type="submit" class="btn-brand">Simpan Koleksi</button>
                 </div>
             </form>
         </div>
     </div>
     @endcan
 
-    <!-- Tabel Daftar Koleksi -->
     <div class="panel">
         <div class="table-responsive">
             <table class="table-minimal">
@@ -82,15 +84,39 @@
                         <th style="width: 220px;" class="text-end">Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="tabel-buku-body">
+                <tbody>
+                    @forelse($bukus as $index => $buku)
                     <tr>
-                        <td colspan="6" class="text-center py-4 text-muted small">Memuat pangkalan data...</td>
+                        <td class="text-center text-muted" style="font-size:0.8125rem;">{{ $index + 1 }}</td>
+                        <td>
+                            <span class="badge border bg-light text-secondary fw-normal px-2 py-1" style="font-size:0.75rem;">
+                                {{ $buku->kategori ? $buku->kategori->nama : 'Umum' }}
+                            </span>
+                        </td>
+
+                        <!-- soal 1 celah a1 judul ditampilkan tanpa escaping html -->
+                        <td class="fw-semibold text-dark">{!! $buku->judul !!}</td>
+
+                        <td class="text-secondary small">{{ $buku->penulis }}</td>
+                        <td class="text-center text-secondary small">{{ $buku->tahun_terbit }}</td>
+                        <td class="text-end">
+                            <div class="d-inline-flex align-items-center gap-1">
+                                <a href="{{ route('buku.show', $buku->id) }}" class="btn btn-sm btn-subtle py-1 px-2" style="font-size:0.75rem;">Detail</a>
+                                @can('kelola data buku')
+                                    <!-- soal 1 celah a3 tombol hapus menggunakan link GET biasa -->
+                                    <a href="{{ route('buku.hapus.get', $buku->id) }}" class="btn-action-danger text-decoration-none">Hapus</a>
+                                @endcan
+                            </div>
+                        </td>
                     </tr>
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted small">Belum ada data buku.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
-@vite(['resources/js/buku.js'])
 @endsection

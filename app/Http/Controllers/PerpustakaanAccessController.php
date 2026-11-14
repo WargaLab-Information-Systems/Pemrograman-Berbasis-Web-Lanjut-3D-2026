@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Buku;
+use App\Models\Kategori;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -41,6 +43,46 @@ class PerpustakaanAccessController extends Controller
         return view('dashboard.siswa', compact('totalBuku', 'user', 'pinjamanAktif'));
     }
 
+    // [SOAL 1] Menyimpan buku baru dari form Blade
+    public function storeBuku(Request $request)
+    {
+        $validated = $request->validate([
+            'kategori_id' => 'required|exists:kategoris,id',
+            'judul' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
+            'tahun_terbit' => 'required|integer|min:1900|max:' . date('Y'),
+        ]);
+
+        Buku::create($validated);
+
+        return redirect()->route('buku.index')->with('success', 'Koleksi buku berhasil ditambahkan.');
+    }
+
+    // [SOAL 1 - CELAH A2] SQL Injection: variabel $judul digabung langsung ke string SQL
+    public function cariBuku(Request $request)
+    {
+        $judul = $request->query('judul');
+        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+
+        return response()->json($hasil);
+    }
+
+    // [SOAL 1 - CELAH A3] Menghapus buku (dipanggil lewat route GET yang rentan CSRF)
+    public function destroy(Buku $buku)
+    {
+        $buku->delete();
+
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
+    }
+
+    // [SOAL 1 - CELAH A4] Mengambil detail peminjaman tanpa memeriksa pemiliknya (rentan IDOR)
+    public function show($id)
+    {
+        $peminjaman = Peminjaman::with(['user', 'buku.kategori'])->findOrFail($id);
+
+        return view('peminjaman.show', compact('peminjaman'));
+    }
+
     public function indexUsers()
     {
         $users = User::with('roles')->get();
@@ -66,7 +108,7 @@ class PerpustakaanAccessController extends Controller
 
         $user->assignRole($request->role);
 
-        return back()->with('success', "Pengguna {$user->name} dengan role {$request->role} berhasil ditambahkan.");
+        return back()->with('success', "Pengguna {$user->name} berhasil ditambahkan.");
     }
 
     public function updateUserRole(Request $request, User $user)
@@ -77,7 +119,7 @@ class PerpustakaanAccessController extends Controller
 
         $user->syncRoles([$request->role]);
 
-        return back()->with('success', "Role untuk {$user->name} berhasil diperbarui menjadi {$request->role}.");
+        return back()->with('success', "Role untuk {$user->name} berhasil diperbarui.");
     }
 
     public function destroyUser(User $user)
@@ -90,14 +132,12 @@ class PerpustakaanAccessController extends Controller
         return back()->with('success', 'Data pengguna berhasil dihapus.');
     }
 
-    // 1. Fitur Siswa: Mengajukan Peminjaman Buku
     public function ajukanPeminjaman(Request $request)
     {
         $request->validate([
             'buku_id' => 'required|exists:bukus,id',
         ]);
 
-        // Cek apakah buku sedang dipinjam atau dalam status menunggu oleh user yang sama
         $cekPinjaman = Peminjaman::where('user_id', Auth::id())
             ->where('buku_id', $request->buku_id)
             ->whereIn('status', ['menunggu', 'dipinjam'])
@@ -114,17 +154,15 @@ class PerpustakaanAccessController extends Controller
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('peminjaman.riwayat.sendiri')->with('success', 'Pengajuan peminjaman berhasil dikirim. Menunggu persetujuan petugas.');
+        return redirect()->route('peminjaman.riwayat.sendiri')->with('success', 'Pengajuan peminjaman berhasil dikirim.');
     }
 
-    // 2. Fitur Petugas/Admin: Melihat Antrean Peminjaman & Pengembalian
     public function kelolaPeminjaman()
     {
         $peminjamans = Peminjaman::with(['user', 'buku.kategori'])->latest()->get();
         return view('peminjaman.index', compact('peminjamans'));
     }
 
-    // 3. Fitur Petugas/Admin: Menyetujui Peminjaman
     public function setujuiPeminjaman($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
@@ -136,18 +174,14 @@ class PerpustakaanAccessController extends Controller
         return back()->with('success', 'Peminjaman buku berhasil disetujui.');
     }
 
-    // 4. Fitur Petugas/Admin: Menolak Peminjaman
     public function tolakPeminjaman($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->update([
-            'status' => 'ditolak',
-        ]);
+        $peminjaman->update(['status' => 'ditolak']);
 
         return back()->with('success', 'Pengajuan peminjaman buku telah ditolak.');
     }
 
-    // 5. Fitur Petugas/Admin: Mencatat Pengembalian Buku
     public function kembalikanBuku($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
@@ -156,10 +190,9 @@ class PerpustakaanAccessController extends Controller
             'tanggal_kembali' => now()->toDateString(),
         ]);
 
-        return back()->with('success', 'Pengembalian buku berhasil dicatat.');
+        return back()->with('success', 'Pengembalian koleksi buku telah dicatat.');
     }
 
-    // 6. Laporan Perpustakaan
     public function laporanPerpustakaan()
     {
         $bukus = Buku::with('kategori')->get();
@@ -170,11 +203,10 @@ class PerpustakaanAccessController extends Controller
         return view('peminjaman.laporan', compact('bukus', 'totalUser', 'totalPeminjaman', 'totalDikembalikan'));
     }
 
-    // 7. Riwayat Peminjaman Milik Sendiri (Validasi Kepemilikan Data Pribadi)
     public function riwayatSendiri($userId = null)
     {
         if ($userId !== null && (int) $userId !== Auth::id()) {
-            abort(403, 'Akses ditolak: Anda tidak diizinkan melihat riwayat peminjaman milik pengguna lain.');
+            abort(403, 'Akses ditolak: Anda tidak dapat melihat riwayat pengguna lain.');
         }
 
         $user = Auth::user();
@@ -186,11 +218,10 @@ class PerpustakaanAccessController extends Controller
         return view('peminjaman.riwayat-sendiri', compact('user', 'riwayats'));
     }
 
-    // 8. Profil Sendiri (Validasi Kepemilikan Data Pribadi)
     public function profilSendiri($userId = null)
     {
         if ($userId !== null && (int) $userId !== Auth::id()) {
-            abort(403, 'Akses ditolak: Anda hanya dapat melihat dan mengubah profil milik Anda sendiri.');
+            abort(403, 'Akses ditolak: Anda hanya dapat mengakses profil milik sendiri.');
         }
 
         $user = Auth::user();
@@ -206,10 +237,7 @@ class PerpustakaanAccessController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
+        $user->update($request->only('name', 'email'));
 
         return back()->with('success', 'Profil Anda berhasil diperbarui.');
     }

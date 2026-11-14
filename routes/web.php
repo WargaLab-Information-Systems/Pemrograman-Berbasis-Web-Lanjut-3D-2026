@@ -5,12 +5,10 @@ use App\Models\Kategori;
 use App\Models\Buku;
 use App\Http\Controllers\PerpustakaanAccessController;
 
-// 1. Rute Beranda
 Route::get('/', function () {
     return auth('web')->check() ? redirect()->route('dashboard') : redirect()->route('login');
 });
 
-// 2. Dispatcher Dashboard Berdasarkan Role
 Route::get('/dashboard', function () {
     $user = auth('web')->user();
 
@@ -23,14 +21,9 @@ Route::get('/dashboard', function () {
     return redirect()->route('siswa.dashboard');
 })->middleware(['auth:web'])->name('dashboard');
 
-// 3. Grup Rute Terproteksi Sesi Web
 Route::middleware(['auth:web'])->group(function () {
 
-    // A. Dashboard
-    Route::get('/siswa/dashboard', [PerpustakaanAccessController::class, 'dashboardSiswa'])
-        ->middleware('role:siswa')
-        ->name('siswa.dashboard');
-
+    // A. Dashboard Masing-Masing Role (Bawaan Modul 5)
     Route::get('/admin/dashboard', [PerpustakaanAccessController::class, 'dashboardAdmin'])
         ->middleware('role_or_permission:akses dashboard admin|admin')
         ->name('admin.dashboard');
@@ -39,26 +32,51 @@ Route::middleware(['auth:web'])->group(function () {
         ->middleware('role_or_permission:akses dashboard petugas|petugas')
         ->name('petugas.dashboard');
 
+    Route::get('/siswa/dashboard', [PerpustakaanAccessController::class, 'dashboardSiswa'])
+        ->middleware('role:siswa')
+        ->name('siswa.dashboard');
+
     // B. Katalog dan Detail Buku
     Route::get('/buku', function () {
         $kategoris = Kategori::all();
-        return view('buku.index', compact('kategoris'));
-    })->middleware('role_or_permission:lihat daftar buku|siswa|petugas|admin')->name('buku.index');
+        // [SOAL 1] Mengambil semua data buku untuk ditampilkan langsung di Blade
+        $bukus = Buku::with('kategori')->latest()->get();
+        return view('buku.index', compact('kategoris', 'bukus'));
+    })->middleware('role_or_permission:lihat daftar buku|siswa|petugas|admin')
+      ->name('buku.index');
+
+    // [SOAL 1] Route untuk menyimpan buku baru dari form Blade
+    Route::post('/buku', [PerpustakaanAccessController::class, 'storeBuku'])
+        ->middleware('role_or_permission:kelola data buku|admin|petugas')
+        ->name('buku.store');
+
+    // [SOAL 1 - CELAH A2] Route GET pencarian buku yang rentan SQL Injection
+    Route::get('/buku-cari', [PerpustakaanAccessController::class, 'cariBuku'])
+        ->name('buku.cari');
+
+    // [SOAL 1 - CELAH A3] Route GET hapus buku yang rentan serangan CSRF dari luar
+    Route::get('/buku/{buku}/hapus', [PerpustakaanAccessController::class, 'destroy'])
+        ->name('buku.hapus.get');
 
     Route::get('/buku/{id}', function ($id) {
         $buku = Buku::with('kategori')->findOrFail($id);
         return view('buku.show', compact('buku'));
-    })->middleware('role_or_permission:lihat daftar buku|siswa|petugas|admin')->name('buku.show');
+    })->middleware('role_or_permission:lihat daftar buku|siswa|petugas|admin')
+      ->name('buku.show');
 
-    // C. Pengajuan Peminjaman Buku (Siswa, Petugas, Admin)
+    // C. Pengajuan Peminjaman Buku (Bawaan Modul 5)
     Route::post('/peminjaman/ajukan', [PerpustakaanAccessController::class, 'ajukanPeminjaman'])
         ->middleware('permission:mengajukan peminjaman buku')
         ->name('peminjaman.ajukan');
 
-    // D. Sirkulasi Peminjaman & Pengembalian (Admin & Petugas)
+    // D. Sirkulasi Peminjaman & Pengembalian
     Route::get('/peminjaman', [PerpustakaanAccessController::class, 'kelolaPeminjaman'])
         ->middleware('role_or_permission:kelola peminjaman|admin|petugas')
         ->name('peminjaman.index');
+
+    // [SOAL 1 - CELAH A4] Route detail peminjaman tanpa cek pemilik (rentan IDOR)
+    Route::get('/peminjaman/{id}', [PerpustakaanAccessController::class, 'show'])
+        ->name('peminjaman.show');
 
     Route::patch('/peminjaman/{id}/setujui', [PerpustakaanAccessController::class, 'setujuiPeminjaman'])
         ->middleware('permission:memproses persetujuan peminjaman')
@@ -72,7 +90,7 @@ Route::middleware(['auth:web'])->group(function () {
         ->middleware('permission:mencatat pengembalian buku')
         ->name('peminjaman.kembalikan');
 
-    // E. Manajemen Pengguna & Penetapan Role (Khusus Admin)
+    // E. Manajemen Pengguna (Bawaan Modul 5)
     Route::get('/admin/users', [PerpustakaanAccessController::class, 'indexUsers'])
         ->middleware('role_or_permission:kelola data pengguna|admin')
         ->name('admin.users');
@@ -89,23 +107,18 @@ Route::middleware(['auth:web'])->group(function () {
         ->middleware('role_or_permission:kelola data pengguna|admin')
         ->name('admin.users.destroy');
 
-    // F. Laporan Perpustakaan (Admin & Petugas)
+    // F. Laporan, Riwayat Sendiri, dan Profil Sendiri (Bawaan Modul 5)
     Route::get('/laporan', [PerpustakaanAccessController::class, 'laporanPerpustakaan'])
         ->middleware('role_or_permission:lihat laporan perpustakaan|admin|petugas')
         ->name('laporan.index');
 
-    // G. Riwayat & Status Peminjaman Sendiri (Pemeriksaan Ownership)
-    Route::get('/riwayat-peminjaman/{userId?}', [PerpustakaanAccessController::class, 'riwayatSendiri'])
-        ->middleware('role_or_permission:melihat riwayat peminjaman sendiri|siswa|admin|petugas')
+    Route::get('/riwayat-peminjaman', [PerpustakaanAccessController::class, 'riwayatSendiri'])
         ->name('peminjaman.riwayat.sendiri');
 
-    // H. Profil Sendiri (Pemeriksaan Ownership)
     Route::get('/profile/{userId?}', [PerpustakaanAccessController::class, 'profilSendiri'])
-        ->middleware('role_or_permission:lihat profil sendiri|siswa|admin|petugas')
         ->name('profile.edit');
 
     Route::patch('/profile', [PerpustakaanAccessController::class, 'updateProfilSendiri'])
-        ->middleware('role_or_permission:ubah profil sendiri|siswa|admin|petugas')
         ->name('profile.update');
 });
 
