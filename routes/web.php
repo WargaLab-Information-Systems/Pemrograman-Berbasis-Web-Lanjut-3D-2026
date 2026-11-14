@@ -36,28 +36,24 @@ Route::middleware(['auth:web'])->group(function () {
         ->middleware('role:siswa')
         ->name('siswa.dashboard');
 
-    // B. Katalog dan Detail Buku
+    // B. Katalog dan Pengelolaan Buku dengan Gate kelola-buku (Soal 3)
+    Route::middleware('can:kelola-buku')->group(function () {
+        Route::get('/buku/create', [PerpustakaanAccessController::class, 'createBuku'])->name('buku.create');
+        Route::post('/buku', [PerpustakaanAccessController::class, 'storeBuku'])->name('buku.store');
+        Route::get('/buku/{buku}/edit', [PerpustakaanAccessController::class, 'editBuku'])->name('buku.edit');
+        Route::put('/buku/{buku}', [PerpustakaanAccessController::class, 'updateBuku'])->name('buku.update');
+        Route::delete('/buku/{buku}', [PerpustakaanAccessController::class, 'destroy'])->name('buku.destroy');
+    });
+
     Route::get('/buku', function () {
         $kategoris = Kategori::all();
-        // [SOAL 1] Mengambil semua data buku untuk ditampilkan langsung di Blade
         $bukus = Buku::with('kategori')->latest()->get();
         return view('buku.index', compact('kategoris', 'bukus'));
     })->middleware('role_or_permission:lihat daftar buku|siswa|petugas|admin')
       ->name('buku.index');
 
-    // [SOAL 1] Route untuk menyimpan buku baru dari form Blade
-    Route::post('/buku', [PerpustakaanAccessController::class, 'storeBuku'])
-        ->middleware('role_or_permission:kelola data buku|admin|petugas')
-        ->name('buku.store');
-
-    // [SOAL 1 - CELAH A2] Route GET pencarian buku yang rentan SQL Injection
     Route::get('/buku-cari', [PerpustakaanAccessController::class, 'cariBuku'])
         ->name('buku.cari');
-
-    // [perbaikan soal 2c] route penghapusan buku memakai metode DELETE
-    Route::delete('/buku/{buku}', [PerpustakaanAccessController::class, 'destroy'])
-        ->middleware('role_or_permission:kelola data buku|admin|petugas')
-        ->name('buku.destroy');
 
     Route::get('/buku/{id}', function ($id) {
         $buku = Buku::with('kategori')->findOrFail($id);

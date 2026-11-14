@@ -58,6 +58,35 @@ class PerpustakaanAccessController extends Controller
         return redirect()->route('buku.index')->with('success', 'Koleksi buku berhasil ditambahkan.');
     }
 
+    // [SOAL 3] Menampilkan halaman form tambah buku (/buku/create)
+    public function createBuku()
+    {
+        $kategoris = Kategori::all();
+        return view('buku.create', compact('kategoris'));
+    }
+
+    // [SOAL 3] Menampilkan halaman form ubah buku (/buku/{buku}/edit)
+    public function editBuku(Buku $buku)
+    {
+        $kategoris = Kategori::all();
+        return view('buku.edit', compact('buku', 'kategoris'));
+    }
+
+    // [SOAL 3] Menyimpan perubahan data buku
+    public function updateBuku(Request $request, Buku $buku)
+    {
+        $validated = $request->validate([
+            'kategori_id' => 'required|exists:kategoris,id',
+            'judul' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
+            'tahun_terbit' => 'required|integer|min:1900|max:' . date('Y'),
+        ]);
+
+        $buku->update($validated);
+
+        return redirect()->route('buku.index')->with('success', 'Data buku berhasil diperbarui.');
+    }
+
     
 // [PERBAIKAN SOAL 2b] Query dengan parameter binding untuk mencegah SQL Injection
     public function cariBuku(Request $request)
