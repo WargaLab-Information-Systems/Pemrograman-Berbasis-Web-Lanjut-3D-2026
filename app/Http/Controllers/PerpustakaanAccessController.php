@@ -58,11 +58,12 @@ class PerpustakaanAccessController extends Controller
         return redirect()->route('buku.index')->with('success', 'Koleksi buku berhasil ditambahkan.');
     }
 
-    // [SOAL 1 - CELAH A2] SQL Injection: variabel $judul digabung langsung ke string SQL
+    
+// [PERBAIKAN SOAL 2b] Query dengan parameter binding untuk mencegah SQL Injection
     public function cariBuku(Request $request)
     {
         $judul = $request->query('judul');
-        $hasil = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        $hasil = DB::select('SELECT * FROM bukus WHERE judul = ?', [$judul]);
 
         return response()->json($hasil);
     }

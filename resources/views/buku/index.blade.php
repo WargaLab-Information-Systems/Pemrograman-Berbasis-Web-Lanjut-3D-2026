@@ -94,17 +94,22 @@
                             </span>
                         </td>
 
-                        <!-- soal 1 celah a1 judul ditampilkan tanpa escaping html -->
-                        <td class="fw-semibold text-dark">{!! $buku->judul !!}</td>
+                        <!-- [perbaikan soal 2a] menampilkan judul dengan blade escaping -->
+                        <td class="fw-semibold text-dark">{{ $buku->judul }}</td>
 
                         <td class="text-secondary small">{{ $buku->penulis }}</td>
                         <td class="text-center text-secondary small">{{ $buku->tahun_terbit }}</td>
                         <td class="text-end">
                             <div class="d-inline-flex align-items-center gap-1">
                                 <a href="{{ route('buku.show', $buku->id) }}" class="btn btn-sm btn-subtle py-1 px-2" style="font-size:0.75rem;">Detail</a>
+
+                                <!-- [perbaikan soal 2c] hapus buku menggunakan form delete dan @csrf -->
                                 @can('kelola data buku')
-                                    <!-- soal 1 celah a3 tombol hapus menggunakan link GET biasa -->
-                                    <a href="{{ route('buku.hapus.get', $buku->id) }}" class="btn-action-danger text-decoration-none">Hapus</a>
+                                    <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" class="d-inline mb-0" onsubmit="return confirm('Hapus buku ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-action-danger">Hapus</button>
+                                    </form>
                                 @endcan
                             </div>
                         </td>

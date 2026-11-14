@@ -54,9 +54,10 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/buku-cari', [PerpustakaanAccessController::class, 'cariBuku'])
         ->name('buku.cari');
 
-    // [SOAL 1 - CELAH A3] Route GET hapus buku yang rentan serangan CSRF dari luar
-    Route::get('/buku/{buku}/hapus', [PerpustakaanAccessController::class, 'destroy'])
-        ->name('buku.hapus.get');
+    // [perbaikan soal 2c] route penghapusan buku memakai metode DELETE
+    Route::delete('/buku/{buku}', [PerpustakaanAccessController::class, 'destroy'])
+        ->middleware('role_or_permission:kelola data buku|admin|petugas')
+        ->name('buku.destroy');
 
     Route::get('/buku/{id}', function ($id) {
         $buku = Buku::with('kategori')->findOrFail($id);
