@@ -9,6 +9,7 @@ use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -105,10 +106,12 @@ class PerpustakaanAccessController extends Controller
         return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus.');
     }
 
-    // [SOAL 1 - CELAH A4] Mengambil detail peminjaman tanpa memeriksa pemiliknya (rentan IDOR)
+    // [soal 4] menutup celah idor pada method show menggunakan PeminjamanPolicy
     public function show($id)
     {
         $peminjaman = Peminjaman::with(['user', 'buku.kategori'])->findOrFail($id);
+
+        Gate::authorize('view', $peminjaman);
 
         return view('peminjaman.show', compact('peminjaman'));
     }
@@ -233,17 +236,18 @@ class PerpustakaanAccessController extends Controller
         return view('peminjaman.laporan', compact('bukus', 'totalUser', 'totalPeminjaman', 'totalDikembalikan'));
     }
 
-    public function riwayatSendiri($userId = null)
+// [SOAL 4] Mengganti pemeriksaan kepemilikan manual dari Modul 5 dengan Policy
+    public function riwayatSendiri()
     {
-        if ($userId !== null && (int) $userId !== Auth::id()) {
-            abort(403, 'Akses ditolak: Anda tidak dapat melihat riwayat pengguna lain.');
-        }
-
         $user = Auth::user();
         $riwayats = Peminjaman::with('buku.kategori')
             ->where('user_id', $user->id)
             ->latest()
             ->get();
+
+        foreach ($riwayats as $pinjam) {
+            Gate::authorize('view', $pinjam);
+        }
 
         return view('peminjaman.riwayat-sendiri', compact('user', 'riwayats'));
     }
