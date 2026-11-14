@@ -89,11 +89,14 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Buat Akun Uji Coba untuk masing-masing Role
-        $admin = User::firstOrCreate(
+        $admin = User::updateOrCreate(
             ['email' => 'admin@perpustakaan.test'],
-            ['name' => 'Admin Perpustakaan', 'password' => Hash::make('password123')]
+            [
+                'name' => 'Admin Perpustakaan',
+                'password' => Hash::make('adminperpustakaan113'),
+            ]
         );
-        $admin->syncRoles(['admin']);
+        $admin->syncRoles(['admin']);;
 
         $petugas = User::firstOrCreate(
             ['email' => 'petugas@perpustakaan.test'],
