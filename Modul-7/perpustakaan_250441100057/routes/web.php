@@ -7,7 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {
+Route::get('/', function () {  
     return view('welcome');
 })->name('home');
 
