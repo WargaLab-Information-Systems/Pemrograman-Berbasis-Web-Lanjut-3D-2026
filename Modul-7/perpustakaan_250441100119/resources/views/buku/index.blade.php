@@ -742,7 +742,7 @@
 
     }
 
-    async function ambilBuku(url = '/api/buku') {
+    async function ambilBuku(url = '/layanan/buku') {
 
         const tabel = document.getElementById('tabel-buku');
 
@@ -960,7 +960,7 @@
 
         try {
 
-            let url = '/api/buku';
+            let url = '/layanan/buku';
 
             const kategoriUnik = new Map();
 
@@ -1152,9 +1152,9 @@
 
             const url = sedangUbah
 
-                ? '/api/buku/' + encodeURIComponent(id)
+                ? '/layanan/buku/' + encodeURIComponent(id)
 
-                : '/api/buku';
+                : '/layanan/buku';
 
             await permintaanAPI(url, {
 
@@ -1186,7 +1186,7 @@
 
             );
 
-            await ambilBuku('/api/buku');
+            await ambilBuku('/layanan/buku');
 
             await ambilKategori();
 
