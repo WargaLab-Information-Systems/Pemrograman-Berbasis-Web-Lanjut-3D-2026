@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Mempercayai proxy Vercel agar Laravel mengenali HTTPS
+        $middleware->trustProxies(at: '*');
+
         // Middleware untuk memeriksa role pengguna
         $middleware->alias([
             'role' => RoleMiddleware::class,
