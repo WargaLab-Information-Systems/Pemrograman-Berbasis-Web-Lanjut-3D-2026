@@ -6,10 +6,8 @@
         }
     },
     "routes": [
-        { "handle": "filesystem" },
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
-        }
+        { "src": "/(build|css|js)/(.*)", "dest": "/$1/$2" },
+        { "src": "/favicon.ico", "dest": "/favicon.ico" },
+        { "src": "/(.*)", "dest": "/api/index.php" }
     ]
 }
