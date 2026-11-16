@@ -1,0 +1,401 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f5f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*NAVBAR*/
+.navbar {
+    width: 100%;
+    background-color: #800000;
+    padding: 18px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1100px;
+    height: 28px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 0;
+}
+
+.nav-link:hover {
+    color: #f3dada;
+}
+
+/*KONTEN UTAMA*/
+.content {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 20px;
+    flex: 1;
+}
+
+/*HALAMAN BERANDA*/
+.home-container {
+    width: 100%;
+    min-height: 500px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-card {
+    width: 850px;
+    max-width: 100%;
+
+    background-color: white;
+
+    padding: 60px 45px;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+    border: 1px solid #eadede;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.home-icon {
+    font-size: 55px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.home-card h1 {
+    color: #800000;
+    font-size: 32px;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.home-card p {
+    width: 100%;
+    max-width: 650px;
+
+    margin: 0 auto 30px auto;
+
+    color: #666;
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    text-align: center;
+}
+
+/*BUTTON*/
+.btn {
+    display: inline-block;
+
+    background-color: #800000;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 11px 22px;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #5c0000;
+}
+
+.home-card .btn {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* JUDUL HALAMAN*/
+.page-title {
+    width: 100%;
+
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.page-title h2 {
+    color: #800000;
+
+    font-size: 30px;
+
+    margin-bottom: 10px;
+}
+
+.page-title p {
+    color: #777;
+
+    font-size: 14px;
+}
+
+/* DAFTAR BUKU*/
+.book-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+/*CARD BUKU*/
+.book-card {
+    background-color: white;
+
+    padding: 22px;
+
+    border-radius: 10px;
+
+    border: 1px solid #eadede;
+
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+
+    transition: 0.2s;
+}
+
+.book-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+/*Icon Buku*/
+.book-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #f5e6e6;
+
+    border-radius: 8px;
+
+    font-size: 28px;
+
+    margin-bottom: 15px;
+}
+
+/* Kategori Buku */
+.book-category {
+    display: inline-block;
+
+    background-color: #f5e6e6;
+
+    color: #800000;
+
+    padding: 5px 10px;
+
+    border-radius: 15px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+/*Judul Buku*/
+.book-card h3 {
+    color: #333;
+
+    font-size: 18px;
+
+    line-height: 1.4;
+
+    margin-bottom: 10px;
+}
+
+/*Penulis*/
+.book-author {
+    color: #666;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+
+    line-height: 1.5;
+}
+
+/*Tahun*/
+.book-year {
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
+}
+
+/*Tombol Card*/
+.book-button {
+    margin-top: 18px;
+}
+
+.book-button .btn {
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+}
+
+
+/*DETAIL BUKU*/
+
+.book-detail {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 20px auto;
+
+    background-color: white;
+
+    padding: 35px;
+
+    border-radius: 12px;
+
+    border: 1px solid #eadede;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.book-detail h2 {
+    color: #800000;
+
+    text-align: center;
+
+    font-size: 28px;
+
+    margin-bottom: 25px;
+}
+
+.book-detail p {
+    padding: 13px 0;
+
+    border-bottom: 1px solid #eeeeee;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.book-detail .btn {
+    display: block;
+
+    width: fit-content;
+
+    margin: 25px auto 0;
+}
+
+
+/*FOOTER*/
+.footer {
+    width: 100%;
+
+    background-color: #5c0000;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 18px;
+
+    margin-top: auto;
+}
+
+.footer p {
+    color: #f5dddd;
+
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+
+    .book-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .nav-container {
+        flex-direction: column;
+
+        height: auto;
+
+        gap: 12px;
+    }
+
+    .nav-menu {
+        gap: 18px;
+    }
+
+    .content {
+        padding: 30px 15px;
+    }
+
+    .home-card {
+        padding: 40px 20px;
+    }
+
+    .home-card h1 {
+        font-size: 25px;
+    }
+
+    .book-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
