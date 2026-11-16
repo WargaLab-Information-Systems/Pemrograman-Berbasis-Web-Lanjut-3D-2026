@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuController;
+use App\Http\Controllers\Api\BukuController as BukuApiController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
-Route::get('/', function () {  
+Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
@@ -20,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buku-cari', [BukuController::class, 'cariSqlInjection'])
         ->name('buku.cari');
 
-    Route::Delete('/buku/{buku}/hapus', [BukuController::class, 'destroy'])
+    Route::delete('/buku/{buku}/hapus', [BukuController::class, 'destroy'])
         ->name('buku.hapus');
 
     Route::delete('/buku/{id}', [BukuController::class, 'destroy'])
@@ -40,6 +41,16 @@ Route::get('/buku', [BukuController::class, 'index'])
 
 Route::get('/buku/{id}', [BukuController::class, 'show'])
     ->name('buku.show');
+
+Route::prefix('data')->name('data.')->group(function () {
+    Route::apiResource('buku', BukuApiController::class)
+        ->only(['index', 'show']);
+
+    Route::middleware(['auth', 'can:kelola-buku'])->group(function () {
+        Route::apiResource('buku', BukuApiController::class)
+            ->only(['store', 'update', 'destroy']);
+    });
+});
 
 Route::middleware(['auth', 'role:admin', 'permission:dashboard_admin'])->group(function () {
     Route::get('/dashboard-admin', function () {
@@ -100,7 +111,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
 });
 
 require __DIR__.'/auth.php';
