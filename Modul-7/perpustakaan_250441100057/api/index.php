@@ -29,4 +29,15 @@ foreach ($env as $key => $value) {
     $_SERVER[$key] = $value;
 }
 
+if (isset($_GET['_vercel_path'])) {
+    $path = $_GET['_vercel_path'];
+
+    unset($_GET['_vercel_path'], $_REQUEST['_vercel_path']);
+
+    $query = http_build_query($_GET);
+
+    $_SERVER['REQUEST_URI'] = $path . ($query ? '?' . $query : '');
+    $_SERVER['QUERY_STRING'] = $query;
+}
+
 require __DIR__ . '/../public/index.php';
