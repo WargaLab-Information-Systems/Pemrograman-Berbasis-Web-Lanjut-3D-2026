@@ -14,7 +14,7 @@
             <h4 class="fw-bold mb-1" style="letter-spacing: -0.02em;">Katalog Koleksi Buku</h4>
             <p class="text-muted small mb-0">Daftar buku literatur yang terdaftar pada pangkalan data perpustakaan.</p>
         </div>
-        @can('kelola-buku')
+        @can('kelola data buku')
             <a href="{{ route('buku.create') }}" class="btn-brand text-decoration-none">+ Tambah Buku</a>
         @endcan
     </div>
@@ -47,7 +47,7 @@
                         <td class="text-end">
                             <div class="d-inline-flex align-items-center gap-1">
                                 <a href="{{ route('buku.show', $buku->id) }}" class="btn btn-sm btn-subtle py-1 px-2" style="font-size:0.75rem;">Detail</a>
-                                @can('kelola-buku')
+                                @can('kelola data buku')
                                     <a href="{{ route('buku.edit', $buku->id) }}" class="btn btn-sm btn-subtle py-1 px-2" style="font-size:0.75rem;">Ubah</a>
                                     <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" class="d-inline mb-0" onsubmit="return confirm('Hapus buku ini?')">
                                         @csrf
