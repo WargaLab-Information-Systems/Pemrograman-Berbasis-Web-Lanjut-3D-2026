@@ -75,7 +75,11 @@
                         <td>{{ $item->tahun_terbit }}</td>
                         <td>
                             <button type="button" class="btn-ubah" onclick="siapEdit({{ $index }})">Ubah</button>
-                            <button type="button" class="btn-hapus" onclick="hapusBuku({{ $item->id }})">Hapus</button>
+                            <form action="{{ route('buku.destroy', $item->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-hapus">Hapus</button>
+                            </form>
                         </td>
                     </tr>
                 @empty

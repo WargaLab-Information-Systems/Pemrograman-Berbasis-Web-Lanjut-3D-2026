@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\DB;
 class BukuController extends Controller
 {
     /**
-     * Pencarian buku rentan SQL Injection (Soal 1: Celah A2)
+     * Pencarian buku dengan parameter binding (Soal 2b: Penutupan Celah SQL Injection)
      */
     public function cari(Request $request): JsonResponse
     {
         $judul = $request->query('judul');
-        $buku = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        $buku = DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);
 
         return response()->json($buku);
     }
