@@ -102,11 +102,14 @@ class PeminjamanController extends Controller
     }
 
     /**
-     * Detail peminjaman (Soal 1: Celah A4 - IDOR tanpa pemeriksaan kepemilikan)
+     * Detail peminjaman dengan otorisasi Policy (Soal 4: Menutup celah IDOR)
      */
     public function show(Request $request, int $id): View
     {
         $peminjaman = Peminjaman::with(['buku', 'user', 'anggota'])->findOrFail($id);
+
+        // Otorisasi menggunakan PeminjamanPolicy
+        \Illuminate\Support\Facades\Gate::authorize('view', $peminjaman);
 
         return view('peminjaman.show', [
             'peminjaman' => $peminjaman,
