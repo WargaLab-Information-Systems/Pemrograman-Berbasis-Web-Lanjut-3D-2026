@@ -44,7 +44,7 @@
                     </a>
                 @endcan
 
-                @can('Kelola data buku')
+                @can('kelola-buku')
                     <a href="{{ route('buku.kelola') }}" class="inline-flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-sm font-semibold rounded-lg transition">
                         Kelola di Inventaris &rarr;
                     </a>

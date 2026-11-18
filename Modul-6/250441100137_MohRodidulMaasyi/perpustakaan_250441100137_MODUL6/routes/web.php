@@ -47,9 +47,9 @@ Route::middleware('auth')->group(function () {
         ->name('buku.show');
 
     // ==========================================
-    // 3. KELOLA DATA BUKU (Admin & Petugas)
+    // 3. KELOLA DATA BUKU (Gate kelola-buku)
     // ==========================================
-    Route::middleware('permission:Kelola data buku')->group(function () {
+    Route::middleware('can:kelola-buku')->group(function () {
         Route::get('/kelola-buku', [BukuController::class, 'kelola'])->name('buku.kelola');
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');

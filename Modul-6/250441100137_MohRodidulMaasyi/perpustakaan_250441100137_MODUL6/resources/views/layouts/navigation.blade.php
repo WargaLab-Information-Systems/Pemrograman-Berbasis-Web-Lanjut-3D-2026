@@ -41,8 +41,8 @@
                         </x-nav-link>
                     @endcan
 
-                    {{-- Kelola Buku (Admin & Petugas) --}}
-                    @can('Kelola data buku')
+                    {{-- Kelola Buku (Gate kelola-buku: Admin & Petugas) --}}
+                    @can('kelola-buku')
                         <x-nav-link :href="route('buku.kelola')" :active="request()->routeIs('buku.kelola', 'buku.create', 'buku.edit')">
                             {{ __('Kelola Buku') }}
                         </x-nav-link>
@@ -160,7 +160,7 @@
                 </x-responsive-nav-link>
             @endcan
 
-            @can('Kelola data buku')
+            @can('kelola-buku')
                 <x-responsive-nav-link :href="route('buku.kelola')" :active="request()->routeIs('buku.kelola')">
                     {{ __('Kelola Buku') }}
                 </x-responsive-nav-link>

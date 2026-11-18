@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/buku.css') }}">
 
 <div class="buku-container">
-    @can('Kelola data buku')
+    @can('kelola-buku')
         <!-- Form Tambah / Ubah Buku (Hanya Tampil untuk Admin & Petugas) -->
         <div class="form-card">
             <h3 id="form-title">Tambah Buku Baru</h3>
@@ -66,7 +66,7 @@
                         <td>{{ $item->penulis }}</td>
                         <td>{{ $item->tahun_terbit }}</td>
                         <td>
-                            @can('Kelola data buku')
+                            @can('kelola-buku')
                                 <button type="button" class="btn-ubah" onclick="siapEdit({{ $index }})">Ubah</button>
                                 <form action="{{ route('buku.destroy', $item->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus buku ini?');">
                                     @csrf
@@ -92,7 +92,7 @@
 </div>
 
 <script>
-    window.canManageBooks = {{ Auth::user()->can('Kelola data buku') ? 'true' : 'false' }};
+    window.canManageBooks = {{ Auth::user()->can('kelola-buku') ? 'true' : 'false' }};
 </script>
 <script src="{{ asset('js/buku.js') }}"></script>
 @endsection
