@@ -1,5 +1,11 @@
 <x-guest-layout>
- 
+
+    <div class="mb-4 text-center">
+        <h2 class="text-lg font-semibold text-gray-800">
+            Sistem Perpustakaan Digital - 250441100057
+        </h2>
+    </div>
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form method="POST" action="{{ route('login') }}">
