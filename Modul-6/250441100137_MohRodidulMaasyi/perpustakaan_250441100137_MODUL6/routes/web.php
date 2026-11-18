@@ -34,6 +34,12 @@ Route::middleware('auth')->group(function () {
     // ==========================================
     // 2. KATALOG BUKU & DETAIL (Semua Role)
     // ==========================================
+    // Celah A2: Pencarian buku rentan SQL Injection
+    Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
+
+    // Celah A3: Penghapusan buku via GET tanpa proteksi CSRF
+    Route::get('/buku/{id}/hapus', [BukuController::class, 'destroy'])->whereNumber('id')->name('buku.hapus.get');
+
     Route::get('/buku', [BukuController::class, 'index'])
         ->middleware('permission:Lihat daftar buku')
         ->name('buku.index');

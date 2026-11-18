@@ -102,22 +102,11 @@ class PeminjamanController extends Controller
     }
 
     /**
-     * Detail peminjaman dengan pembatasan hak akses berbasis identitas
+     * Detail peminjaman (Soal 1: Celah A4 - IDOR tanpa pemeriksaan kepemilikan)
      */
     public function show(Request $request, int $id): View
     {
         $peminjaman = Peminjaman::with(['buku', 'user', 'anggota'])->findOrFail($id);
-        $user       = $request->user();
-
-        // Jika bukan admin/petugas yang punya izin Kelola peminjaman, periksa kepemilikan data pribadi
-        if (!$user->can('Kelola peminjaman')) {
-            $isOwner = ($peminjaman->user_id === $user->id) ||
-                       ($user->anggota && $peminjaman->anggota_id === $user->anggota->id);
-
-            if (!$isOwner) {
-                abort(403, 'Akses ditolak. Anda tidak diperbolehkan melihat data riwayat peminjaman milik pengguna lain.');
-            }
-        }
 
         return view('peminjaman.show', [
             'peminjaman' => $peminjaman,

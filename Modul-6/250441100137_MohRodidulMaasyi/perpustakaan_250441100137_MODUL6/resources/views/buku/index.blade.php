@@ -62,7 +62,7 @@
                 @forelse($buku as $index => $item)
                     <tr>
                         <td>{{ $item->kategori->nama ?? '-' }}</td>
-                        <td>{{ $item->judul }}</td>
+                        <td>{!! $item->judul !!}</td>
                         <td>{{ $item->penulis }}</td>
                         <td>{{ $item->tahun_terbit }}</td>
                         <td>

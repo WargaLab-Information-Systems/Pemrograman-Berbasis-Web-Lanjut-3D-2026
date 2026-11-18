@@ -5,12 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class BukuController extends Controller
 {
+    /**
+     * Pencarian buku rentan SQL Injection (Soal 1: Celah A2)
+     */
+    public function cari(Request $request): JsonResponse
+    {
+        $judul = $request->query('judul');
+        $buku = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+
+        return response()->json($buku);
+    }
+
     public function home(): View
     {
         return view('home');
