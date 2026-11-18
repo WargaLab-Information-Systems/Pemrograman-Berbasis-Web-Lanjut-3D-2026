@@ -94,12 +94,12 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Pembuatan Akun Default untuk Pengujian Skenario
-        // 1. Akun Admin
+        // 1. Akun Admin (Password baru yang aman - Soal 5: Penguatan Konfigurasi)
         $admin = User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Administrator',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('AdminSecure#250441100137!'),
                 'role' => 'admin',
             ]
         );
