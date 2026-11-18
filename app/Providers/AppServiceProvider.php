@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,8 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Modul 7: Memaksa skema HTTPS pada environment production (Vercel)
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        Gate::define('kelola-buku', function (User $user) {
+            return $user->hasAnyRole(['admin', 'petugas']);
+        });
     }
 }
