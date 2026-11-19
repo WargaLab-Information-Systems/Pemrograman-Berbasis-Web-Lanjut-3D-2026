@@ -97,12 +97,6 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
-            'options' => [
-                // Transaction pooler Supabase (port 6543) tidak mendukung
-                // prepared statement sungguhan. Opsi ini membuat PDO
-                // "mengemulasikan" prepared statement di sisi PHP.
-                PDO::ATTR_EMULATE_PREPARES => true,
-            ],
         ],
 
         'sqlsrv' => [

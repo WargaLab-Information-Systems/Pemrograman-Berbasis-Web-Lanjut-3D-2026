@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,20 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /**
-         * Modul 7: di Vercel, koneksi HTTPS diterima di lapisan depan lalu
-         * diteruskan ke aplikasi sebagai request biasa, sehingga Laravel bisa
-         * mengira dirinya diakses lewat HTTP dan menghasilkan tautan http://.
-         * Browser memblokir CSS/JS http:// pada halaman https:// (mixed
-         * content), jadi di production semua URL dipaksa memakai https.
-         */
-        if ($this->app->environment('production')) {
-            URL::forceScheme('https');
-        }
-
-        /**
-         * Modul 6 Soal 3: Gate "kelola-buku" memusatkan aturan siapa yang
-         * boleh menambah, mengubah, dan menghapus buku di SATU tempat.
-         * (Tidak berubah dari Modul 6.)
+         * Soal 3: Gate "kelola-buku" memusatkan aturan siapa yang boleh
+         * menambah, mengubah, dan menghapus buku di SATU tempat. Sebelum
+         * ini, aturannya tersebar sebagai middleware permission:kelola
+         * data buku di routes/api.php DAN sebagai @can('kelola data buku')
+         * di view -- dua tempat yang bisa saja lupa disamakan. Sekarang
+         * keduanya memanggil Gate yang sama.
          */
         Gate::define('kelola-buku', function (User $user) {
             return $user->hasAnyRole(['admin', 'petugas']);
