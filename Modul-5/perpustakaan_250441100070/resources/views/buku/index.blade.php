@@ -7,6 +7,7 @@
 
     {{-- Pesan sukses / gagal (diisi oleh resources/js/buku.js) --}}
     <div id="pesan" class="alert" role="alert" hidden></div>
+    
 
     {{-- Formulir tambah / ubah hanya untuk yang berhak mengelola buku (admin & petugas) --}}
     @can('kelola data buku')

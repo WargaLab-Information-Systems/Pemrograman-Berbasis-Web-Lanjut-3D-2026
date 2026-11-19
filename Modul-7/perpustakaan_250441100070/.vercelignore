@@ -1,0 +1,20 @@
+# Folder dependency: Vercel memasangnya sendiri saat build
+# (composer install dan npm install), jadi tidak perlu diunggah.
+/vendor
+/node_modules
+
+# Rahasia: tidak boleh ikut terunggah ke Vercel.
+# Nilainya didaftarkan lewat Settings > Environment Variables.
+.env
+.env.production
+.env.backup
+
+# Berkas lokal yang tidak dibutuhkan aplikasi saat berjalan
+/.git
+/.github
+/.idea
+/.vscode
+/tests
+/storage/logs
+/public/hot
+*.log
