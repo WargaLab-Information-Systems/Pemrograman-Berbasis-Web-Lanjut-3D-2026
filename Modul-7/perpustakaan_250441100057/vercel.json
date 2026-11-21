@@ -1,0 +1,26 @@
+{
+    "outputDirectory": "public",
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.9.0"
+        }
+    },
+    "routes": [
+        {
+            "src": "/(build|css|js)/(.*)",
+            "dest": "/$1/$2"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/favicon.ico"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/api/index.php?_vercel_path=/api/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ]
+}
